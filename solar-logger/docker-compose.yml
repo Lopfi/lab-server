@@ -43,7 +43,7 @@ services:
       - GF_SECURITY_ADMIN_USER=${GRAFANA_USERNAME}
       - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
 volumes:
-  influxdb-storage: ./data/influxdb2
-  influxdb-config: ./config/influxdb2
-  chronograf-storage: ./data/chronograf
-  grafana-storage: ./data/grafana
+  - influxdb-storage: ./data/influxdb2
+  - influxdb-config: ./config/influxdb2
+  - chronograf-storage: ./data/chronograf
+  - grafana-storage: ./data/grafana
