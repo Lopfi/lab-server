@@ -6,8 +6,8 @@ services:
     ports:
       - "8086:8086"
     volumes:
-      - influxdb-storage:/var/lib/influxdb2
-      - influxdb-config:/etc/influxdb2
+      - ./data/influxdb2:/var/lib/influxdb2
+      - ./config/influxdb2:/etc/influxdb2
     environment:
       - INFLUXDB_DB=solar
       - DOCKER_INFLUXDB_INIT_USERNAME=${INFLUXDB_USERNAME}
@@ -21,7 +21,7 @@ services:
     ports:
       - "8888:8888"
     volumes:
-      - chronograf-storage:/var/lib/chronograf
+      - ./data/chronograf:/var/lib/chronograf
     depends_on:
       - influxdb
     environment:
@@ -35,15 +35,10 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - grafana-storage:/var/lib/grafana
+      - ./data/grafana:/var/lib/grafana
       - ./grafana-provisioning/:/etc/grafana/provisioning
     depends_on:
       - influxdb
     environment:
       - GF_SECURITY_ADMIN_USER=${GRAFANA_USERNAME}
       - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
-volumes:
-  - influxdb-storage: ./data/influxdb2
-  - influxdb-config: ./config/influxdb2
-  - chronograf-storage: ./data/chronograf
-  - grafana-storage: ./data/grafana
