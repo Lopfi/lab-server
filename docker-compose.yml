@@ -1,0 +1,146 @@
+version: "3.8"
+services:
+  duckdns:
+    image: linuxserver/duckdns:latest
+    container_name: duckdns
+    restart: unless-stopped
+    environment:
+      - SUBDOMAINS=${DUCKDNS_SUBDOMAINS}
+      - TOKEN=${DUCKDNS_TOKEN}
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+  proxy-manager:
+    image: "jc21/nginx-proxy-manager:latest"
+    container_name: proxy-manager
+    ports:
+      - "80:80"
+      - "81:81"
+      - "443:443"
+    volumes:
+      - ./nginx/config.json:/app/config/production.json
+      - ./nginx/data:/data
+      - .data/nginx/letsencrypt:/etc/letsencrypt
+  pm-mariadb:
+    image: "yobasystems/alpine-mariadb:latest"
+    container_name: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: "nginx"
+      MYSQL_DATABASE: "nginx"
+      MYSQL_USER: "nginx"
+      MYSQL_PASSWORD: "nginx"
+    volumes:
+      - ./mysql:/var/lib/mysql
+  heimdall:
+    image: linuxserver/heimdall:latest
+    container_name: heimdall
+    ports:
+      - 7203:443/tcp
+      - 7202:80/tcp
+    restart: unless-stopped
+    volumes:
+      - ./heimdall:/config
+  influxdb:
+    image: influxdb:latest
+    container_name: influxdb
+    restart: unless-stopped
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=${INFLUXDB_INIT_MODE}
+      - DOCKER_INFLUXDB_INIT_USERNAME=${INFLUXDB_INIT_USERNAME}
+      - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUXDB_INIT_PASSWORD}
+      - DOCKER_INFLUXDB_INIT_ORG=${INFLUXDB_INIT_ORG}
+      - DOCKER_INFLUXDB_INIT_BUCKET=${INFLUXDB_INIT_BUCKET}
+      - INFLUXD_LOG_LEVEL=${INFLUXD_LOG_LEVEL}
+      - TZ=${TZ}
+    ports:
+      - 8086:8086/tcp
+    volumes:
+      - ./influxdb2:/var/lib/influxdb2
+      - ./influxdb2/scripts:/docker-entrypoint-initdb.d
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    volumes:
+      - ./grafana/data:/var/lib/grafana
+  pihole:
+    image: pihole/pihole:latest
+    restart: unless-stopped
+    container_name: pihole
+    environment:
+      - TZ=${TZ}
+      - WEBPASSWORD=${PIHOLE_WEBPASSWORD}
+    ports:
+      - 4443:443/tcp
+      - 53:53/tcp
+      - 53:53/udp
+      - 67:67/udp
+      - 1010:80/tcp
+    volumes:
+      - ./pihole/DNS:/etc/dnsmasq.d
+      - ./pihole:/etc/pihole
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce:latest
+    restart: always
+    ports:
+      - 8000:8000/tcp
+      - 9443:9443/tcp
+    volumes:
+      - ./portainer:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+  wireguard:
+    image: lscr.io/linuxserver/wireguard:latest
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+      - SERVERURL=dorst.duckdns.org
+      - SERVERPORT=51820
+      - PEERS=2
+      - PEERDNS=auto #optional
+      - INTERNAL_SUBNET=10.13.13.0 #optional
+      - ALLOWEDIPS=0.0.0.0/0 #optional
+      - LOG_CONFS=true #optional
+    volumes:
+      - ./wireguard/config:/config
+      - /lib/modules:/lib/modules
+    ports:
+      - 51820:51820/udp
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    restart: unless-stopped
+  youtubedl:
+    image: tzahi12345/youtubedl-material:latest
+    environment:
+      ALLOW_CONFIG_MUTATIONS: "true"
+      ytdl_mongodb_connection_string: "mongodb://ytdl-mongo-db:27017"
+      ytdl_use_local_db: "false"
+      write_ytdl_config: "true"
+    restart: always
+    depends_on:
+      - ytdl-mongo-db
+    volumes:
+      - ./youtubedl/appdata:/app/appdata
+      - ./youtubedl/audio:/app/audio
+      - ./youtubedl/video:/app/video
+      - ./youtubedl/subscriptions:/app/subscriptions
+      - ./youtubedl/users:/app/users
+    ports:
+      - "8998:17442"
+  ytdl-mongodb:
+    image: mongo
+    container_name: mongo-db
+    restart: always
+    ports:
+      - "27017:27017"
+    logging:
+      driver: "none"
+    volumes:
+      - ./youtubedl/db/:/data/db
