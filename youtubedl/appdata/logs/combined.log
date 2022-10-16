@@ -1,0 +1,12 @@
+2022-10-16T21:43:04.932Z INFO: Cannot find config file. Creating one with default values...
+2022-10-16T21:43:04.958Z INFO: Config items set using ENV variables.
+2022-10-16T21:43:05.081Z INFO: Beginning migration: 4.1->4.2+
+2022-10-16T21:43:05.101Z INFO: 4.1->4.2+ migration complete!
+2022-10-16T21:43:05.102Z INFO: Beginning migration: 4.2->4.3+
+2022-10-16T21:43:05.128Z INFO: 4.2->4.3+ migration complete!
+2022-10-16T21:43:08.815Z INFO: Config items set using ENV variables.
+2022-10-16T21:43:10.092Z INFO: YoutubeDL-Material v4.3 started on PORT 17442
+2022-10-16T21:45:59.534Z INFO: Config items set using ENV variables.
+2022-10-16T21:45:59.659Z INFO: Restarting server...
+2022-10-16T21:46:03.451Z INFO: Config items set using ENV variables.
+2022-10-16T21:46:04.761Z INFO: YoutubeDL-Material v4.3 started on PORT 17442
