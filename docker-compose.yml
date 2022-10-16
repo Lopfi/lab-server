@@ -85,7 +85,7 @@ services:
       - ./pihole:/etc/pihole
   portainer:
     container_name: portainer
-    image: portainer/portainer-ce:linux-arm
+    image: portainer/portainer-ce:latest
     restart: always
     ports:
       - 8000:8000/tcp
