@@ -123,7 +123,7 @@ services:
     environment:
       ALLOW_CONFIG_MUTATIONS: "true"
       ytdl_mongodb_connection_string: "mongodb://ytdl-mongo-db:27017"
-      ytdl_use_local_db: "false"
+      ytdl_use_local_db: "true"
       write_ytdl_config: "true"
     restart: always
     depends_on:
@@ -136,13 +136,3 @@ services:
       - ./youtubedl/users:/app/users
     ports:
       - "8998:17442"
-  ytdl-mongodb:
-    image: mongo
-    container_name: mongo-db
-    restart: always
-    ports:
-      - "27017:27017"
-    logging:
-      driver: "none"
-    volumes:
-      - ./youtubedl/db/:/data/db
