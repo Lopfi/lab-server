@@ -17,6 +17,8 @@ services:
       - "80:80"
       - "81:81"
       - "443:443"
+    depends_on:
+      - pm-mariadb
     volumes:
       - ./nginx/config.json:/app/config/production.json
       - ./nginx/data:/data
@@ -125,7 +127,7 @@ services:
       write_ytdl_config: "true"
     restart: always
     depends_on:
-      - ytdl-mongo-db
+      - ytdl-mongodb
     volumes:
       - ./youtubedl/appdata:/app/appdata
       - ./youtubedl/audio:/app/audio
