@@ -43,7 +43,7 @@ services:
     volumes:
       - ./heimdall:/config
   influxdb:
-    image: arm64v8/influxdb:latest
+    image: influxdb:latest
     container_name: influxdb
     restart: unless-stopped
     environment:
