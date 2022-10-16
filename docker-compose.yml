@@ -121,6 +121,7 @@ services:
     restart: unless-stopped
   youtubedl:
     image: tzahi12345/youtubedl-material:latest
+    container_name: youtubedl
     environment:
       ALLOW_CONFIG_MUTATIONS: "true"
       ytdl_mongodb_connection_string: "mongodb://ytdl-mongo-db:27017"
