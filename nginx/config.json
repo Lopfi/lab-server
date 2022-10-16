@@ -1,7 +1,7 @@
 {
   "database": {
     "engine": "mysql",
-    "host": "mariadb",
+    "host": "db",
     "name": "nginx",
     "user": "nginx",
     "password": "nginx",
