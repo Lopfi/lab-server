@@ -126,8 +126,6 @@ services:
       ytdl_use_local_db: "true"
       write_ytdl_config: "true"
     restart: always
-    depends_on:
-      - ytdl-mongodb
     volumes:
       - ./youtubedl/appdata:/app/appdata
       - ./youtubedl/audio:/app/audio
