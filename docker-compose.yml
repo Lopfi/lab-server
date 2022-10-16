@@ -10,29 +10,6 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=${TZ}
-  proxy-manager:
-    image: "jc21/nginx-proxy-manager:latest"
-    container_name: proxy-manager
-    ports:
-      - "80:80"
-      - "81:81"
-      - "443:443"
-    depends_on:
-      - pm-mariadb
-    volumes:
-      - ./nginx/config.json:/app/config/production.json
-      - ./nginx/data:/data
-      - .data/nginx/letsencrypt:/etc/letsencrypt
-  pm-mariadb:
-    image: "yobasystems/alpine-mariadb:latest"
-    container_name: mariadb
-    environment:
-      MYSQL_ROOT_PASSWORD: "nginx"
-      MYSQL_DATABASE: "nginx"
-      MYSQL_USER: "nginx"
-      MYSQL_PASSWORD: "nginx"
-    volumes:
-      - ./nginx/data/mysql:/var/lib/mysql
   heimdall:
     image: linuxserver/heimdall:latest
     container_name: heimdall
