@@ -94,7 +94,7 @@ services:
       - ./portainer:/data
       - /var/run/docker.sock:/var/run/docker.sock
   wireguard:
-    image: lscr.io/linuxserver/wireguard:latest
+    image: linuxserver/wireguard:latest
     container_name: wireguard
     cap_add:
       - NET_ADMIN
