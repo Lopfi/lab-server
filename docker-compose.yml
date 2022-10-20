@@ -104,18 +104,20 @@ services:
       - ./youtubedl/users:/app/users
     ports:
       - "8998:17442"
-  calibre-web:
-    image: lscr.io/linuxserver/calibre-web:latest
-    container_name: calibre-web
+  calibre:
+    image: lscr.io/linuxserver/calibre:latest
+    container_name: calibre
+    security_opt:
+      - seccomp:unconfined #optional
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=${TZ}
-      - OAUTHLIB_RELAX_TOKEN_SCOPE=1
-      - DOCKER_MODS=linuxserver/mods:universal-calibre #optional
+      - PASSWORD=${CALIBRE_PASSWORD}
+      - CLI_ARGS= #optional
     volumes:
-      - ./calibre/config:/config
-      - ./calibre/library:/books
+      - /calibre/config:/config
     ports:
-      - 8083:8083
+      - 8080:8080
+      - 8081:8081
     restart: unless-stopped
