@@ -40,6 +40,7 @@ services:
     image: timeseriesadmin/timeseriesadmin:latest
     restart: unless-stopped
     container_name: timeseriesadmin
+    entrypoint: "/bin/bash"
     ports:
       - 8085:80
   pihole:
