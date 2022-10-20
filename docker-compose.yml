@@ -116,7 +116,7 @@ services:
       - PASSWORD=${CALIBRE_PASSWORD}
       - CLI_ARGS= #optional
     volumes:
-      - /calibre/config:/config
+      - ./calibre/config:/config
     ports:
       - 8080:8080
       - 8081:8081
