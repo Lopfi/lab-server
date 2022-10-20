@@ -36,12 +36,6 @@ services:
     volumes:
       - ./influxdb2:/var/lib/influxdb2
       - ./influxdb2/scripts:/docker-entrypoint-initdb.d
-  timeseriesadmin:
-    image: timeseriesadmin/timeseriesadmin:0.1.13-multiplatform-dev.0
-    restart: unless-stopped
-    container_name: timeseriesadmin
-    ports:
-      - 8085:80
   pihole:
     image: pihole/pihole:latest
     restart: unless-stopped
