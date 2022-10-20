@@ -121,3 +121,18 @@ services:
       - 8080:8080
       - 8081:8081
     restart: unless-stopped
+  calibre-web:
+    image: lscr.io/linuxserver/calibre-web:latest
+    container_name: calibre-web
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+      - DOCKER_MODS=linuxserver/mods:universal-calibre #optional
+      - OAUTHLIB_RELAX_TOKEN_SCOPE=1 #optional
+    volumes:
+      - ./calibre/config:/config
+      - ./calibre/config/books:/books
+    ports:
+      - 8083:8083
+    restart: unless-stopped
