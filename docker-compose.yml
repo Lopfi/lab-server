@@ -136,3 +136,12 @@ services:
     ports:
       - 8083:8083
     restart: unless-stopped
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+    user: 1000
+    ports:
+      - 3000:3000
+    volumes:
+      - ./grafana/data:/var/lib/grafana
