@@ -139,6 +139,8 @@ services:
   homeassistant:
     image: "ghcr.io/home-assistant/home-assistant:stable"
     container_name: homeassistant
+    ports:
+      - 8123:8123
     environment:
       - TZ=${TZ}
     volumes:
@@ -154,3 +156,4 @@ services:
       - 3000:3000
     volumes:
       - ./grafana/data:/var/lib/grafana
+    privileged: true
