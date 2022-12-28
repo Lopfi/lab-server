@@ -136,3 +136,12 @@ services:
     ports:
       - 8083:8083
     restart: unless-stopped
+  homeassistant:
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    container_name: homeassistant
+    environment:
+      - TZ=${TZ}
+    volumes:
+      - ./homeassistant/config:/config
+    restart: unless-stopped
+    privileged: true
