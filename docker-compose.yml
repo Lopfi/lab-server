@@ -147,6 +147,15 @@ services:
       - ./homeassistant/config:/config
     restart: unless-stopped
     privileged: true
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    volumes:
+      - ./mosquitto/config/:/mosquitto/config/:ro
+      - ./mosquitto/log/:/mosquitto/log/
+      - ./mosquitto/data:/mosquitto/data/
+    ports:
+      - 1883:1883
+      - 9001:9001
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
