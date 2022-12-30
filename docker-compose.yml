@@ -7,15 +7,15 @@ services:
     environment:
       - SUBDOMAINS=${DUCKDNS_SUBDOMAINS}
       - TOKEN=${DUCKDNS_TOKEN}
-      - PUID={PUID}
-      - PGID={PGID}
+      - PUID=${PUID}
+      - PGID=${PGID}
       - TZ=${TZ}
   heimdall:
     image: linuxserver/heimdall:latest
     container_name: heimdall
     environment:
-      - PUID={PUID}
-      - PGID={PGID}
+      - PUID=${PUID}
+      - PGID=${PGID}
     ports:
       - 7203:443/tcp
       - 7202:80/tcp
@@ -46,8 +46,8 @@ services:
     environment:
       - TZ=${TZ}
       - WEBPASSWORD=${PIHOLE_WEBPASSWORD}
-      - PUID={PUID}
-      - PGID={PGID}
+      - PUID=${PUID}
+      - PGID=${PGID}
     ports:
       - 4443:443/tcp
       - 53:53/tcp
@@ -74,8 +74,8 @@ services:
       - NET_ADMIN
       - SYS_MODULE
     environment:
-      - PUID={PUID}
-      - PGID={PGID}
+      - PUID=${PUID}
+      - PGID=${PGID}
       - TZ=Europe/Berlin
       - SERVERURL=dorst.duckdns.org
       - SERVERPORT=51820
@@ -115,8 +115,8 @@ services:
     security_opt:
       - seccomp:unconfined #optional
     environment:
-      - PUID={PUID}
-      - PGID={PGID}
+      - PUID=${PUID}
+      - PGID=${PGID}
       - TZ=${TZ}
       - PASSWORD=${CALIBRE_PASSWORD}
       - CLI_ARGS= #optional
@@ -130,8 +130,8 @@ services:
     image: lscr.io/linuxserver/calibre-web:latest
     container_name: calibre-web
     environment:
-      - PUID={PUID}
-      - PGID={PGID}
+      - PUID=${PUID}
+      - PGID=${PGID}
       - TZ=${TZ}
       - DOCKER_MODS=linuxserver/mods:universal-calibre #optional
       - OAUTHLIB_RELAX_TOKEN_SCOPE=1 #optional
@@ -156,8 +156,8 @@ services:
     image: eclipse-mosquitto:latest
     container_name: mosquitto
     environment:
-      - PUID={PUID}
-      - PGID={PGID}
+      - PUID=${PUID}
+      - PGID=${PGID}
     volumes:
       - ./mosquitto/config/:/mosquitto/config/:ro
       - ./mosquitto/log/:/mosquitto/log/
