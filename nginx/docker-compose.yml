@@ -6,10 +6,14 @@ services:
       - "80:80"
       - "81:81"
       - "443:443"
+    environment:
+      - PUID=1000
+      - PGID=1000
     volumes:
       - ./config.json:/app/config/production.json
       - ./data:/data
       - ./letsencrypt:/etc/letsencrypt
+    restart: always
   db:
     image: "yobasystems/alpine-mariadb:latest"
     environment:
@@ -19,3 +23,4 @@ services:
       MYSQL_PASSWORD: "nginx"
     volumes:
       - ./data/mysql:/var/lib/mysql
+    restart: always
