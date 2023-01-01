@@ -175,3 +175,11 @@ services:
     volumes:
       - ./grafana:/var/lib/grafana
     privileged: true
+  esphome:
+    container_name: esphome
+    image: esphome/esphome
+    volumes:
+      - /path/to/esphome/config:/config
+      - /etc/localtime:/etc/localtime:ro
+    restart: unless-stopped
+    privileged: true
