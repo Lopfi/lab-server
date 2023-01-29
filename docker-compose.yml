@@ -1,5 +1,29 @@
 version: "3.8"
 services:
+  # General
+  heimdall:
+    image: linuxserver/heimdall:latest
+    container_name: heimdall
+    restart: unless-stopped
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+    ports:
+      - 7203:443/tcp
+      - 7202:80/tcp
+    volumes:
+      - heimdall:/config
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: always
+    ports:
+      - 8000:8000/tcp
+      - 9443:9443/tcp
+    volumes:
+      - portainer:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+  # Networking
   duckdns:
     image: linuxserver/duckdns:latest
     container_name: duckdns
@@ -10,18 +34,147 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
-  heimdall:
-    image: linuxserver/heimdall:latest
-    container_name: heimdall
+  pihole:
+    image: pihole/pihole:latest
+    container_name: pihole
+    restart: unless-stopped
+    environment:
+      - TZ=${TZ}
+      - WEBPASSWORD=${PIHOLE_WEBPASSWORD}
+      - PUID=${PUID}
+      - PGID=${PGID}
+    ports:
+      - 4443:443/tcp
+      - 53:53/tcp
+      - 53:53/udp
+      - 67:67/udp
+      - 1010:80/tcp
+    volumes:
+      - ./pihole/DNS:/etc/dnsmasq.d
+      - ./pihole:/etc/pihole
+  wireguard:
+    image: linuxserver/wireguard:latest
+    container_name: wireguard
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - SERVERURL=${SERVERURL}
+      - SERVERPORT=51820
+      - PEERS=2
+      - PEERDNS=auto #optional
+      - INTERNAL_SUBNET=10.13.13.0 #optional
+      - ALLOWEDIPS=0.0.0.0/0 #optional
+      - LOG_CONFS=true #optional
+    ports:
+      - 51820:51820/udp
+    volumes:
+      - ./wireguard:/config
+      - /lib/modules:/lib/modules
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+  # Media
+  youtubedl:
+    image: tzahi12345/youtubedl-material:latest
+    container_name: youtubedl
+    restart: unless-stopped
+    environment:
+      ALLOW_CONFIG_MUTATIONS: "true"
+      ytdl_mongodb_connection_string: "mongodb://ytdl-mongo-db:27017"
+      ytdl_use_local_db: "true"
+      write_ytdl_config: "true"
+    ports:
+      - 8998:17442
+    volumes:
+      - ./youtubedl/appdata:/app/appdata
+      - ./youtubedl/audio:/app/audio
+      - ./youtubedl/video:/app/video
+      - ./youtubedl/subscriptions:/app/subscriptions
+      - ./youtubedl/users:/app/users
+  calibre:
+    image: lscr.io/linuxserver/calibre:latest
+    container_name: calibre
+    restart: unless-stopped
+    security_opt:
+      - seccomp:unconfined #optional
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - PASSWORD=${CALIBRE_PASSWORD}
+      - CLI_ARGS= #optional
+    ports:
+      - 8080:8080
+      - 8081:8081
+    volumes:
+      - ./calibre:/config
+  calibre-web:
+    image: lscr.io/linuxserver/calibre-web:latest
+    container_name: calibre-web
+    restart: unless-stopped
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - DOCKER_MODS=linuxserver/mods:universal-calibre #optional
+      - OAUTHLIB_RELAX_TOKEN_SCOPE=1 #optional
+    ports:
+      - 8083:8083
+    volumes:
+      - ./calibre:/config
+      - ./calibre/books:/books
+  # Home Automation
+  homeassistant:
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    container_name: homeassistant
+    restart: unless-stopped
+    environment:
+      - TZ=${TZ}
+    ports:
+      - 8123:8123
+    volumes:
+      - ./homeassistant:/config
+    privileged: true
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    container_name: mosquitto
+    restart: unless-stopped
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
     ports:
-      - 7203:443/tcp
-      - 7202:80/tcp
-    restart: unless-stopped
+      - 1883:1883
+      - 9001:9001
     volumes:
-      - ./heimdall:/config
+      - ./mosquitto/config:/mosquitto/config/
+      - ./mosquitto/log/:/mosquitto/log/
+      - ./mosquitto:/mosquitto/data/
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+    user: "1000"
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana:/var/lib/grafana
+    privileged: true
+  esphome:
+    image: esphome/esphome
+    container_name: esphome
+    restart: unless-stopped
+    environment:
+      - TZ=${TZ}
+    ports:
+      - 6052:6052
+      - 6123:6123
+    volumes:
+      - esphome:/config
+    privileged: true
   influxdb:
     image: influxdb:latest
     container_name: influxdb
@@ -37,153 +190,10 @@ services:
     ports:
       - 8086:8086/tcp
     volumes:
-      - ./influxdb2:/var/lib/influxdb2
-      - ./influxdb2/scripts:/docker-entrypoint-initdb.d
-  pihole:
-    image: pihole/pihole:latest
-    restart: unless-stopped
-    container_name: pihole
-    environment:
-      - TZ=${TZ}
-      - WEBPASSWORD=${PIHOLE_WEBPASSWORD}
-      - PUID=${PUID}
-      - PGID=${PGID}
-    ports:
-      - 4443:443/tcp
-      - 53:53/tcp
-      - 53:53/udp
-      - 67:67/udp
-      - 1010:80/tcp
-    volumes:
-      - ./pihole/DNS:/etc/dnsmasq.d
-      - ./pihole:/etc/pihole
-  portainer:
-    container_name: portainer
-    image: portainer/portainer-ce:latest
-    restart: always
-    ports:
-      - 8000:8000/tcp
-      - 9443:9443/tcp
-    volumes:
-      - ./portainer:/data
-      - /var/run/docker.sock:/var/run/docker.sock
-  wireguard:
-    image: linuxserver/wireguard:latest
-    container_name: wireguard
-    cap_add:
-      - NET_ADMIN
-      - SYS_MODULE
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=Europe/Berlin
-      - SERVERURL=dorst.duckdns.org
-      - SERVERPORT=51820
-      - PEERS=2
-      - PEERDNS=auto #optional
-      - INTERNAL_SUBNET=10.13.13.0 #optional
-      - ALLOWEDIPS=0.0.0.0/0 #optional
-      - LOG_CONFS=true #optional
-    volumes:
-      - ./wireguard/config:/config
-      - /lib/modules:/lib/modules
-    ports:
-      - 51820:51820/udp
-    sysctls:
-      - net.ipv4.conf.all.src_valid_mark=1
-    restart: unless-stopped
-  youtubedl:
-    image: tzahi12345/youtubedl-material:latest
-    container_name: youtubedl
-    environment:
-      ALLOW_CONFIG_MUTATIONS: "true"
-      ytdl_mongodb_connection_string: "mongodb://ytdl-mongo-db:27017"
-      ytdl_use_local_db: "true"
-      write_ytdl_config: "true"
-    restart: always
-    volumes:
-      - ./youtubedl/appdata:/app/appdata
-      - ./youtubedl/audio:/app/audio
-      - ./youtubedl/video:/app/video
-      - ./youtubedl/subscriptions:/app/subscriptions
-      - ./youtubedl/users:/app/users
-    ports:
-      - "8998:17442"
-  calibre:
-    image: lscr.io/linuxserver/calibre:latest
-    container_name: calibre
-    security_opt:
-      - seccomp:unconfined #optional
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-      - PASSWORD=${CALIBRE_PASSWORD}
-      - CLI_ARGS= #optional
-    volumes:
-      - ./calibre/config:/config
-    ports:
-      - 8080:8080
-      - 8081:8081
-    restart: unless-stopped
-  calibre-web:
-    image: lscr.io/linuxserver/calibre-web:latest
-    container_name: calibre-web
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-      - DOCKER_MODS=linuxserver/mods:universal-calibre #optional
-      - OAUTHLIB_RELAX_TOKEN_SCOPE=1 #optional
-    volumes:
-      - ./calibre/config:/config
-      - ./calibre/config/books:/books
-    ports:
-      - 8083:8083
-    restart: unless-stopped
-  homeassistant:
-    image: "ghcr.io/home-assistant/home-assistant:stable"
-    container_name: homeassistant
-    ports:
-      - 8123:8123
-    environment:
-      - TZ=${TZ}
-    volumes:
-      - ./homeassistant/config:/config
-    restart: unless-stopped
-    privileged: true
-  mosquitto:
-    image: eclipse-mosquitto:latest
-    container_name: mosquitto
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-    volumes:
-      - ./mosquitto/config/:/mosquitto/config/
-      - ./mosquitto/log/:/mosquitto/log/
-      - ./mosquitto/data:/mosquitto/data/
-    ports:
-      - 1883:1883
-      - 9001:9001
-  grafana:
-    image: grafana/grafana:latest
-    container_name: grafana
-    restart: unless-stopped
-    user: "1000"
-    ports:
-      - 3000:3000
-    volumes:
-      - ./grafana:/var/lib/grafana
-    privileged: true
+      - influxdb:/var/lib/influxdb2
+volumes:
   esphome:
-    container_name: esphome
-    image: esphome/esphome
-    environment:
-      - TZ=${TZ}
-    ports:
-      - 6052:6052
-      - 6123:6123
-    volumes:
-      - ./esphome/config:/config
-    restart: unless-stopped
-    privileged: true
+  influxdb:
+  grafana:
+  portainer:
+  heimdall:
