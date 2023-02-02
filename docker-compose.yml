@@ -127,6 +127,20 @@ services:
     volumes:
       - ./calibre:/config
       - ./calibre/books:/books
+  audiobookshelf:
+    image: ghcr.io/advplyr/audiobookshelf:latest
+    container_name: audiobookshelf
+    restart: unless-stopped
+    environment:
+      - AUDIOBOOKSHELF_UID=${PUID}
+      - AUDIOBOOKSHELF_GID=${PGID}
+    ports:
+      - 13378:80
+    volumes:
+      - ./audiobookshelf/audiobooks:/audiobooks
+      - ./audiobookshelf/podcasts:/podcasts
+      - ./audiobookshelf/config:/config
+      - ./audiobookshelf/metadata:/metadata
   # Home Automation
   homeassistant:
     image: "ghcr.io/home-assistant/home-assistant:stable"
@@ -164,7 +178,7 @@ services:
       - grafana:/var/lib/grafana
     privileged: true
   esphome:
-    image: esphome/esphome
+    image: esphome/esphome:latest
     container_name: esphome
     restart: unless-stopped
     environment:
