@@ -66,7 +66,7 @@ services:
       - SERVERURL=${SERVERURL}
       - SERVERPORT=51820
       - PEERS=2
-      - PEERDNS=192.168.178.3 #optional
+      - PEERDNS=auto #optional
       - INTERNAL_SUBNET=10.13.13.0 #optional
       - ALLOWEDIPS=0.0.0.0/0 #optional
       - LOG_CONFS=true #optional
