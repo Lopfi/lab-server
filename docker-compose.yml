@@ -137,10 +137,9 @@ services:
     ports:
       - 13378:80
     volumes:
-      - ./audiobookshelf/audiobooks:/audiobooks
-      - ./audiobookshelf/podcasts:/podcasts
-      - ./audiobookshelf/config:/config
-      - ./audiobookshelf/metadata:/metadata
+      - audiobookshelf-audiobooks:/audiobooks
+      - audiobookshelf-config:/config
+      - audiobookshelf-metadata:/metadata
   # Home Automation
   homeassistant:
     image: "ghcr.io/home-assistant/home-assistant:stable"
@@ -206,6 +205,15 @@ services:
     volumes:
       - influxdb:/var/lib/influxdb2
 volumes:
+  audiobookshelf-audiobooks:
+    external: true
+    name: audiobookshelf-audiobooks
+  audiobookshelf-config:
+    external: true
+    name: audiobookshelf-config
+  audiobookshelf-metadata:
+    external: true
+    name: audiobookshelf-metadata
   esphome:
   influxdb:
   grafana:
