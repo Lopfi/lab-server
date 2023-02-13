@@ -167,131 +167,131 @@ volumes:
     driver: local
     driver_opts:
       type: nfs
-      o: nfsvers=4,addr=${NFS_Server},rw
+      o: nfsvers=4,addr=${NFS_SERVER},rw
       device: ":/mnt/store/nfs/docker-volumes/homeassistant"
   ytdl-appdata:
     name: ytdl-appdata
     driver: local
     driver_opts:
       type: nfs
-      o: nfsvers=4,addr=${NFS_Server},rw
+      o: nfsvers=4,addr=${NFS_SERVER},rw
       device: ":/mnt/store/nfs/docker-volumes/ytdl/appdata"
   ytdl-audio:
     name: ytdl-audio
     driver: local
     driver_opts:
       type: nfs
-      o: nfsvers=4,addr=${NFS_Server},rw
+      o: nfsvers=4,addr=${NFS_SERVER},rw
       device: ":/mnt/store/nfs/docker-volumes/ytdl/audio"
   ytdl-video:
     name: ytdl-video
     driver: local
     driver_opts:
       type: nfs
-      o: nfsvers=4,addr=${NFS_Server},rw
+      o: nfsvers=4,addr=${NFS_SERVER},rw
       device: ":/mnt/store/nfs/docker-volumes/ytdl/video"
   ytdl-subscriptions:
     name: ytdl-subscriptions
     driver: local
     driver_opts:
       type: nfs
-      o: nfsvers=4,addr=${NFS_Server},rw
+      o: nfsvers=4,addr=${NFS_SERVER},rw
       device: ":/mnt/store/nfs/docker-volumes/ytdl/subscriptions"
   ytdl-users:
     name: ytdl-users
     driver: local
     driver_opts:
       type: nfs
-      o: nfsvers=4,addr=${NFS_Server},rw
+      o: nfsvers=4,addr=${NFS_SERVER},rw
       device: ":/mnt/store/nfs/docker-volumes/ytdl/users"
   calibre-config:
     name: calibre-config
     driver: local
     driver_opts:
       type: nfs
-      o: nfsvers=4,addr=${NFS_Server},rw
+      o: nfsvers=4,addr=${NFS_SERVER},rw
       device: ":/mnt/store/nfs/docker-volumes/calibre/config"
   calibre-books:
     name: calibre-books
     driver: local
     driver_opts:
       type: nfs
-      o: nfsvers=4,addr=${NFS_Server},rw
+      o: nfsvers=4,addr=${NFS_SERVER},rw
       device: ":/mnt/store/nfs/docker-volumes/calibre/books"
   audiobookshelf-audiobooks:
     name: audiobookshelf-audiobooks
     driver: local
     driver_opts:
       type: nfs
-      o: nfsvers=4,addr=${NFS_Server},rw
+      o: nfsvers=4,addr=${NFS_SERVER},rw
       device: ":/mnt/store/nfs/docker-volumes/audiobookshelf/audiobooks"
   audiobookshelf-config:
     name: audiobookshelf-config
     driver: local
     driver_opts:
       type: nfs
-      o: nfsvers=4,addr=${NFS_Server},rw
+      o: nfsvers=4,addr=${NFS_SERVER},rw
       device: ":/mnt/store/nfs/docker-volumes/audiobookshelf/config"
   audiobookshelf-metadata:
     name: audiobookshelf-metadata
     driver: local
     driver_opts:
       type: nfs
-      o: nfsvers=4,addr=${NFS_Server},rw
+      o: nfsvers=4,addr=${NFS_SERVER},rw
       device: ":/mnt/store/nfs/docker-volumes/audiobookshelf/metadata"
   esphome:
     name: esphome
     driver: local
     driver_opts:
       type: nfs
-      o: nfsvers=4,addr=${NFS_Server},rw
+      o: nfsvers=4,addr=${NFS_SERVER},rw
       device: ":/mnt/store/nfs/docker-volumes/esphome"
   influxdb:
     name: influxdb
     driver: local
     driver_opts:
       type: nfs
-      o: nfsvers=4,addr=${NFS_Server},rw
+      o: nfsvers=4,addr=${NFS_SERVER},rw
       device: ":/mnt/store/nfs/docker-volumes/influxdb"
   grafana:
     name: grafana
     driver: local
     driver_opts:
       type: nfs
-      o: nfsvers=4,addr=${NFS_Server},rw
+      o: nfsvers=4,addr=${NFS_SERVER},rw
       device: ":/mnt/store/nfs/docker-volumes/grafana"
   portainer:
     name: portainer
     driver: local
     driver_opts:
       type: nfs
-      o: nfsvers=4,addr=${NFS_Server},rw
+      o: nfsvers=4,addr=${NFS_SERVER},rw
       device: ":/mnt/store/nfs/docker-volumes/portainer"
   heimdall:
     name: heimdall
     driver: local
     driver_opts:
       type: nfs
-      o: nfsvers=4,addr=${NFS_Server},rw
+      o: nfsvers=4,addr=${NFS_SERVER},rw
       device: ":/mnt/store/nfs/docker-volumes/heimdall"
   mosquitto-data:
     name: mosquitto-data
     driver: local
     driver_opts:
       type: nfs
-      o: nfsvers=4,addr=${NFS_Server},rw
+      o: nfsvers=4,addr=${NFS_SERVER},rw
       device: ":/mnt/store/nfs/docker-volumes/mosquitto/data"
   mosquitto-log:
     name: mosquitto-log
     driver: local
     driver_opts:
       type: nfs
-      o: nfsvers=4,addr=${NFS_Server},rw
+      o: nfsvers=4,addr=${NFS_SERVER},rw
       device: ":/mnt/store/nfs/docker-volumes/mosquitto/log"
   mosquitto-config:
     name: mosquitto-config
     driver: local
     driver_opts:
       type: nfs
-      o: nfsvers=4,addr=${NFS_Server},rw
+      o: nfsvers=4,addr=${NFS_SERVER},rw
       device: ":/mnt/store/nfs/docker-volumes/mosquitto/config"
