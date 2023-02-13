@@ -34,49 +34,6 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
-  pihole:
-    image: pihole/pihole:latest
-    container_name: pihole
-    restart: unless-stopped
-    environment:
-      - TZ=${TZ}
-      - WEBPASSWORD=${PIHOLE_WEBPASSWORD}
-      - PUID=${PUID}
-      - PGID=${PGID}
-    ports:
-      - 4443:443/tcp
-      - 53:53/tcp
-      - 53:53/udp
-      - 67:67/udp
-      - 1010:80/tcp
-    volumes:
-      - ./pihole/DNS:/etc/dnsmasq.d
-      - ./pihole:/etc/pihole
-  wireguard:
-    image: linuxserver/wireguard:latest
-    container_name: wireguard
-    restart: unless-stopped
-    cap_add:
-      - NET_ADMIN
-      - SYS_MODULE
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-      - SERVERURL=${SERVERURL}
-      - SERVERPORT=51820
-      - PEERS=2
-      - PEERDNS=auto #optional
-      - INTERNAL_SUBNET=10.13.13.0 #optional
-      - ALLOWEDIPS=0.0.0.0/0 #optional
-      - LOG_CONFS=true #optional
-    ports:
-      - 51820:51820/udp
-    volumes:
-      - ./wireguard:/config
-      - /lib/modules:/lib/modules
-    sysctls:
-      - net.ipv4.conf.all.src_valid_mark=1
   # Media
   youtubedl:
     image: tzahi12345/youtubedl-material:latest
@@ -90,11 +47,11 @@ services:
     ports:
       - 8998:17442
     volumes:
-      - ./youtubedl/appdata:/app/appdata
-      - ./youtubedl/audio:/app/audio
-      - ./youtubedl/video:/app/video
-      - ./youtubedl/subscriptions:/app/subscriptions
-      - ./youtubedl/users:/app/users
+      - ytdl-appdata:/app/appdata
+      - ytdl-audio:/app/audio
+      - ytdl-video:/app/video
+      - ytdl-subscriptions:/app/subscriptions
+      - ytdl-users:/app/users
   calibre:
     image: lscr.io/linuxserver/calibre:latest
     container_name: calibre
@@ -111,7 +68,7 @@ services:
       - 8080:8080
       - 8081:8081
     volumes:
-      - ./calibre:/config
+      - calibre-config:/config
   calibre-web:
     image: lscr.io/linuxserver/calibre-web:latest
     container_name: calibre-web
@@ -125,8 +82,8 @@ services:
     ports:
       - 8083:8083
     volumes:
-      - ./calibre:/config
-      - ./calibre/books:/books
+      - calibre-config:/config
+      - calibre-books:/books
   audiobookshelf:
     image: ghcr.io/advplyr/audiobookshelf:latest
     container_name: audiobookshelf
@@ -150,7 +107,7 @@ services:
     ports:
       - 8123:8123
     volumes:
-      - ./homeassistant:/config
+      - homeassistant:/config
     privileged: true
   mosquitto:
     image: eclipse-mosquitto:latest
@@ -163,9 +120,9 @@ services:
       - 1883:1883
       - 9001:9001
     volumes:
-      - ./mosquitto/config:/mosquitto/config/
-      - ./mosquitto/log/:/mosquitto/log/
-      - ./mosquitto:/mosquitto/data/
+      - mosquitto-config:/mosquitto/config/
+      - mosquitto-log:/mosquitto/log/
+      - mosquitto-data:/mosquitto/data/
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
@@ -205,17 +162,136 @@ services:
     volumes:
       - influxdb:/var/lib/influxdb2
 volumes:
+  homeassistant:
+    name: homeassistant
+    driver: local
+    driver_opts:
+      type: nfs
+      o: nfsvers=4,addr=${NFS_Server},rw
+      device: ":/mnt/store/nfs/docker-volumes/homeassistant"
+  ytdl-appdata:
+    name: ytdl-appdata
+    driver: local
+    driver_opts:
+      type: nfs
+      o: nfsvers=4,addr=${NFS_Server},rw
+      device: ":/mnt/store/nfs/docker-volumes/ytdl/appdata"
+  ytdl-audio:
+    name: ytdl-audio
+    driver: local
+    driver_opts:
+      type: nfs
+      o: nfsvers=4,addr=${NFS_Server},rw
+      device: ":/mnt/store/nfs/docker-volumes/ytdl/audio"
+  ytdl-video:
+    name: ytdl-video
+    driver: local
+    driver_opts:
+      type: nfs
+      o: nfsvers=4,addr=${NFS_Server},rw
+      device: ":/mnt/store/nfs/docker-volumes/ytdl/video"
+  ytdl-subscriptions:
+    name: ytdl-subscriptions
+    driver: local
+    driver_opts:
+      type: nfs
+      o: nfsvers=4,addr=${NFS_Server},rw
+      device: ":/mnt/store/nfs/docker-volumes/ytdl/subscriptions"
+  ytdl-users:
+    name: ytdl-users
+    driver: local
+    driver_opts:
+      type: nfs
+      o: nfsvers=4,addr=${NFS_Server},rw
+      device: ":/mnt/store/nfs/docker-volumes/ytdl/users"
+  calibre-config:
+    name: calibre-config
+    driver: local
+    driver_opts:
+      type: nfs
+      o: nfsvers=4,addr=${NFS_Server},rw
+      device: ":/mnt/store/nfs/docker-volumes/calibre/config"
+  calibre-books:
+    name: calibre-books
+    driver: local
+    driver_opts:
+      type: nfs
+      o: nfsvers=4,addr=${NFS_Server},rw
+      device: ":/mnt/store/nfs/docker-volumes/calibre/books"
   audiobookshelf-audiobooks:
-    external: true
     name: audiobookshelf-audiobooks
+    driver: local
+    driver_opts:
+      type: nfs
+      o: nfsvers=4,addr=${NFS_Server},rw
+      device: ":/mnt/store/nfs/docker-volumes/audiobookshelf/audiobooks"
   audiobookshelf-config:
-    external: true
     name: audiobookshelf-config
+    driver: local
+    driver_opts:
+      type: nfs
+      o: nfsvers=4,addr=${NFS_Server},rw
+      device: ":/mnt/store/nfs/docker-volumes/audiobookshelf/config"
   audiobookshelf-metadata:
-    external: true
     name: audiobookshelf-metadata
+    driver: local
+    driver_opts:
+      type: nfs
+      o: nfsvers=4,addr=${NFS_Server},rw
+      device: ":/mnt/store/nfs/docker-volumes/audiobookshelf/metadata"
   esphome:
+    name: esphome
+    driver: local
+    driver_opts:
+      type: nfs
+      o: nfsvers=4,addr=${NFS_Server},rw
+      device: ":/mnt/store/nfs/docker-volumes/esphome"
   influxdb:
+    name: influxdb
+    driver: local
+    driver_opts:
+      type: nfs
+      o: nfsvers=4,addr=${NFS_Server},rw
+      device: ":/mnt/store/nfs/docker-volumes/influxdb"
   grafana:
+    name: grafana
+    driver: local
+    driver_opts:
+      type: nfs
+      o: nfsvers=4,addr=${NFS_Server},rw
+      device: ":/mnt/store/nfs/docker-volumes/grafana"
   portainer:
+    name: portainer
+    driver: local
+    driver_opts:
+      type: nfs
+      o: nfsvers=4,addr=${NFS_Server},rw
+      device: ":/mnt/store/nfs/docker-volumes/portainer"
   heimdall:
+    name: heimdall
+    driver: local
+    driver_opts:
+      type: nfs
+      o: nfsvers=4,addr=${NFS_Server},rw
+      device: ":/mnt/store/nfs/docker-volumes/heimdall"
+  mosquitto-data:
+    name: mosquitto-data
+    driver: local
+    driver_opts:
+      type: nfs
+      o: nfsvers=4,addr=${NFS_Server},rw
+      device: ":/mnt/store/nfs/docker-volumes/mosquitto/data"
+  mosquitto-log:
+    name: mosquitto-log
+    driver: local
+    driver_opts:
+      type: nfs
+      o: nfsvers=4,addr=${NFS_Server},rw
+      device: ":/mnt/store/nfs/docker-volumes/mosquitto/log"
+  mosquitto-config:
+    name: mosquitto-config
+    driver: local
+    driver_opts:
+      type: nfs
+      o: nfsvers=4,addr=${NFS_Server},rw
+      device: ":/mnt/store/nfs/docker-volumes/mosquitto/config"
