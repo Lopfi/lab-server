@@ -165,6 +165,7 @@ services:
 volumes:
   homeassistant:
     name: homeassistant
+    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -172,6 +173,7 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/homeassistant"
   ytdl-appdata:
     name: ytdl-appdata
+    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -179,6 +181,7 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/ytdl/appdata"
   ytdl-audio:
     name: ytdl-audio
+    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -186,6 +189,7 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/ytdl/audio"
   ytdl-video:
     name: ytdl-video
+    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -193,6 +197,7 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/ytdl/video"
   ytdl-subscriptions:
     name: ytdl-subscriptions
+    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -200,6 +205,7 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/ytdl/subscriptions"
   ytdl-users:
     name: ytdl-users
+    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -207,6 +213,7 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/ytdl/users"
   calibre-config:
     name: calibre-config
+    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -214,6 +221,7 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/calibre/config"
   calibre-books:
     name: calibre-books
+    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -221,6 +229,7 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/calibre/books"
   audiobookshelf-audiobooks:
     name: audiobookshelf-audiobooks
+    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -228,6 +237,7 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/audiobookshelf/audiobooks"
   audiobookshelf-config:
     name: audiobookshelf-config
+    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -235,6 +245,7 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/audiobookshelf/config"
   audiobookshelf-metadata:
     name: audiobookshelf-metadata
+    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -242,6 +253,7 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/audiobookshelf/metadata"
   esphome:
     name: esphome
+    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -249,6 +261,7 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/esphome"
   influxdb:
     name: influxdb
+    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -256,6 +269,7 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/influxdb"
   grafana:
     name: grafana
+    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -263,6 +277,7 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/grafana"
   portainer:
     name: portainer
+    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -270,6 +285,7 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/portainer"
   heimdall:
     name: heimdall
+    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -277,6 +293,7 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/heimdall"
   mosquitto-data:
     name: mosquitto-data
+    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -284,6 +301,7 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/mosquitto/data"
   mosquitto-log:
     name: mosquitto-log
+    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -291,6 +309,7 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/mosquitto/log"
   mosquitto-config:
     name: mosquitto-config
+    nocopy: true
     driver: local
     driver_opts:
       type: nfs
