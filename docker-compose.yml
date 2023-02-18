@@ -12,7 +12,7 @@ services:
       - 7203:443/tcp
       - 7202:80/tcp
     volumes:
-      - ${VOLUMES}/heimdall:/config
+      - ${VOLUMES}/heimdall:/config:nocopy
   portainer:
     image: portainer/portainer-ce:latest
     container_name: portainer
@@ -21,7 +21,7 @@ services:
       - 8000:8000/tcp
       - 9443:9443/tcp
     volumes:
-      - ${VOLUMES}/portainer:/data
+      - ${VOLUMES}/portainer:/data:nocopy
       - /var/run/docker.sock:/var/run/docker.sock
   # Networking
   duckdns:
@@ -47,11 +47,11 @@ services:
     ports:
       - 8998:17442
     volumes:
-      - ${VOLUMES}/ytdl/appdata:/app/appdata
-      - ${VOLUMES}/ytdl/audio:/app/audio
-      - ${VOLUMES}/ytdl/video:/app/video
-      - ${VOLUMES}/ytdl/subscriptions:/app/subscriptions
-      - ${VOLUMES}/ytdl/users:/app/users
+      - ${VOLUMES}/ytdl/appdata:/app/appdata:nocopy
+      - ${VOLUMES}/ytdl/audio:/app/audio:nocopy
+      - ${VOLUMES}/ytdl/video:/app/video:nocopy
+      - ${VOLUMES}/ytdl/subscriptions:/app/subscriptions:nocopy
+      - ${VOLUMES}/ytdl/users:/app/users:nocopy
   calibre:
     image: lscr.io/linuxserver/calibre:latest
     container_name: calibre
@@ -68,7 +68,7 @@ services:
       - 8080:8080
       - 8081:8081
     volumes:
-      - ${VOLUMES}/calibre/config:/config
+      - ${VOLUMES}/calibre/config:/config:nocopy
   calibre-web:
     image: lscr.io/linuxserver/calibre-web:latest
     container_name: calibre-web
@@ -82,8 +82,8 @@ services:
     ports:
       - 8083:8083
     volumes:
-      - ${VOLUMES}/calibre/config:/config
-      - ${VOLUMES}/calibre/books:/books
+      - ${VOLUMES}/calibre/config:/config:nocopy
+      - ${VOLUMES}/calibre/books:/books:nocopy
   audiobookshelf:
     image: ghcr.io/advplyr/audiobookshelf:latest
     container_name: audiobookshelf
@@ -94,9 +94,9 @@ services:
     ports:
       - 13378:80
     volumes:
-      - ${VOLUMES}/audiobookshelf/audiobooks:/audiobooks
-      - ${VOLUMES}/audiobookshelf/config:/config
-      - ${VOLUMES}/audiobookshelf/metadata:/metadata
+      - ${VOLUMES}/audiobookshelf/audiobooks:/audiobooks:nocopy
+      - ${VOLUMES}/audiobookshelf/config:/config:nocopy
+      - ${VOLUMES}/audiobookshelf/metadata:/metadata:nocopy
   # Home Automation
   homeassistant:
     image: "ghcr.io/home-assistant/home-assistant:stable"
@@ -107,7 +107,7 @@ services:
     ports:
       - 8123:8123
     volumes:
-      - ${VOLUMES}/homeassistant:/config
+      - ${VOLUMES}/homeassistant:/config:nocopy
     privileged: true
   mosquitto:
     image: eclipse-mosquitto:latest
@@ -120,9 +120,9 @@ services:
       - 1883:1883
       - 9001:9001
     volumes:
-      - ${VOLUMES}/mosquitto/config:/mosquitto/config/
-      - ${VOLUMES}/mosquitto/log:/mosquitto/log/
-      - ${VOLUMES}/mosquitto/data:/mosquitto/data/
+      - ${VOLUMES}/mosquitto/config:/mosquitto/config/:nocopy
+      - ${VOLUMES}/mosquitto/log:/mosquitto/log/:nocopy
+      - ${VOLUMES}/mosquitto/data:/mosquitto/data/:nocopy
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
@@ -131,7 +131,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ${VOLUMES}/grafana:/var/lib/grafana
+      - ${VOLUMES}/grafana:/var/lib/grafana:nocopy
     privileged: true
   esphome:
     image: esphome/esphome:latest
@@ -143,7 +143,7 @@ services:
       - 6052:6052
       - 6123:6123
     volumes:
-      - ${VOLUMES}/esphome:/config
+      - ${VOLUMES}/esphome:/config:nocopy
     privileged: true
   influxdb:
     image: influxdb:latest
@@ -160,4 +160,4 @@ services:
     ports:
       - 8086:8086/tcp
     volumes:
-      - ${VOLUMES}/influxdb:/var/lib/influxdb2
+      - ${VOLUMES}/influxdb:/var/lib/influxdb2:nocopy
