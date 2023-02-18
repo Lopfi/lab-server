@@ -12,7 +12,7 @@ services:
       - 7203:443/tcp
       - 7202:80/tcp
     volumes:
-      - heimdall:/config
+      - heimdall:/config:nocopy
   portainer:
     image: portainer/portainer-ce:latest
     container_name: portainer
@@ -21,7 +21,7 @@ services:
       - 8000:8000/tcp
       - 9443:9443/tcp
     volumes:
-      - portainer:/data
+      - portainer:/data:nocopy
       - /var/run/docker.sock:/var/run/docker.sock
   # Networking
   duckdns:
@@ -47,11 +47,11 @@ services:
     ports:
       - 8998:17442
     volumes:
-      - ytdl-appdata:/app/appdata
-      - ytdl-audio:/app/audio
-      - ytdl-video:/app/video
-      - ytdl-subscriptions:/app/subscriptions
-      - ytdl-users:/app/users
+      - ytdl-appdata:/app/appdata:nocopy
+      - ytdl-audio:/app/audio:nocopy
+      - ytdl-video:/app/video:nocopy
+      - ytdl-subscriptions:/app/subscriptions:nocopy
+      - ytdl-users:/app/users:nocopy
   calibre:
     image: lscr.io/linuxserver/calibre:latest
     container_name: calibre
@@ -68,7 +68,7 @@ services:
       - 8080:8080
       - 8081:8081
     volumes:
-      - calibre-config:/config
+      - calibre-config:/config:nocopy
   calibre-web:
     image: lscr.io/linuxserver/calibre-web:latest
     container_name: calibre-web
@@ -82,8 +82,8 @@ services:
     ports:
       - 8083:8083
     volumes:
-      - calibre-config:/config
-      - calibre-books:/books
+      - calibre-config:/config:nocopy
+      - calibre-books:/books:nocopy
   audiobookshelf:
     image: ghcr.io/advplyr/audiobookshelf:latest
     container_name: audiobookshelf
@@ -94,9 +94,9 @@ services:
     ports:
       - 13378:80
     volumes:
-      - audiobookshelf-audiobooks:/audiobooks
-      - audiobookshelf-config:/config
-      - audiobookshelf-metadata:/metadata
+      - audiobookshelf-audiobooks:/audiobooks:nocopy
+      - audiobookshelf-config:/config:nocopy
+      - audiobookshelf-metadata:/metadata:nocopy
   # Home Automation
   homeassistant:
     image: "ghcr.io/home-assistant/home-assistant:stable"
@@ -107,7 +107,7 @@ services:
     ports:
       - 8123:8123
     volumes:
-      - homeassistant:/config
+      - homeassistant:/config:nocopy
     privileged: true
   mosquitto:
     image: eclipse-mosquitto:latest
@@ -120,9 +120,9 @@ services:
       - 1883:1883
       - 9001:9001
     volumes:
-      - mosquitto-config:/mosquitto/config/
-      - mosquitto-log:/mosquitto/log/
-      - mosquitto-data:/mosquitto/data/
+      - mosquitto-config:/mosquitto/config/:nocopy
+      - mosquitto-log:/mosquitto/log/:nocopy
+      - mosquitto-data:/mosquitto/data/:nocopy
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
@@ -131,7 +131,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - grafana:/var/lib/grafana
+      - grafana:/var/lib/grafana:nocopy
     privileged: true
   esphome:
     image: esphome/esphome:latest
@@ -143,7 +143,7 @@ services:
       - 6052:6052
       - 6123:6123
     volumes:
-      - esphome:/config
+      - esphome:/config:nocopy
     privileged: true
   influxdb:
     image: influxdb:latest
@@ -160,12 +160,11 @@ services:
     ports:
       - 8086:8086/tcp
     volumes:
-      - influxdb:/var/lib/influxdb2
+      - influxdb:/var/lib/influxdb2:nocopy
 
 volumes:
   homeassistant:
     name: homeassistant
-    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -173,7 +172,6 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/homeassistant"
   ytdl-appdata:
     name: ytdl-appdata
-    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -181,7 +179,6 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/ytdl/appdata"
   ytdl-audio:
     name: ytdl-audio
-    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -189,7 +186,6 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/ytdl/audio"
   ytdl-video:
     name: ytdl-video
-    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -197,7 +193,6 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/ytdl/video"
   ytdl-subscriptions:
     name: ytdl-subscriptions
-    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -205,7 +200,6 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/ytdl/subscriptions"
   ytdl-users:
     name: ytdl-users
-    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -213,7 +207,6 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/ytdl/users"
   calibre-config:
     name: calibre-config
-    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -221,7 +214,6 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/calibre/config"
   calibre-books:
     name: calibre-books
-    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -229,7 +221,6 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/calibre/books"
   audiobookshelf-audiobooks:
     name: audiobookshelf-audiobooks
-    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -237,7 +228,6 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/audiobookshelf/audiobooks"
   audiobookshelf-config:
     name: audiobookshelf-config
-    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -245,7 +235,6 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/audiobookshelf/config"
   audiobookshelf-metadata:
     name: audiobookshelf-metadata
-    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -253,7 +242,6 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/audiobookshelf/metadata"
   esphome:
     name: esphome
-    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -261,7 +249,6 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/esphome"
   influxdb:
     name: influxdb
-    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -269,7 +256,6 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/influxdb"
   grafana:
     name: grafana
-    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -277,7 +263,6 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/grafana"
   portainer:
     name: portainer
-    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -285,7 +270,6 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/portainer"
   heimdall:
     name: heimdall
-    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -293,7 +277,6 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/heimdall"
   mosquitto-data:
     name: mosquitto-data
-    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -301,7 +284,6 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/mosquitto/data"
   mosquitto-log:
     name: mosquitto-log
-    nocopy: true
     driver: local
     driver_opts:
       type: nfs
@@ -309,7 +291,6 @@ volumes:
       device: ":/mnt/store/nfs/docker-volumes/mosquitto/log"
   mosquitto-config:
     name: mosquitto-config
-    nocopy: true
     driver: local
     driver_opts:
       type: nfs
