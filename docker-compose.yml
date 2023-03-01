@@ -35,11 +35,6 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
-  tunnel:
-    container_name: cloudflared-tunnel
-    image: cloudflare/cloudflared
-    restart: unless-stopped
-    command: tunnel --no-autoupdate run --token eyJhIjoiZjk0OGI4NzRiMzM5NTlhMzhjZjNkNTg1NTgzNzc5YzAiLCJ0IjoiOGZmZjAxNjYtNmQ4Yy00ZWJlLTg2MjAtNDc2NDBjNDczYzI0IiwicyI6Ik16RmhaVEExTlRRdFltSXlaUzAwWm1Ka0xUbGxNR0l0TW1VM05EWTBPR05rT1RVNSJ9
   # Media
   youtubedl:
     image: tzahi12345/youtubedl-material:latest
@@ -169,6 +164,26 @@ services:
       - 8086:8086/tcp
     volumes:
       - influxdb:/var/lib/influxdb2
+  partdb:
+    container_name: partdb
+    ports:
+      - 3002:80
+    volumes:
+      - partdb-uploads:/var/www/html/uploads
+      - partdb-public_media:/var/www/html/public/media
+      - partdb-db:/var/www/html/var/db
+    restart: unless-stopped
+    image: jbtronics/part-db1:latest
+    environment:
+      # Put SQLite database in our mapped folder. You can configure some other kind of database here too.
+      - DATABASE_URL=sqlite:///%kernel.project_dir%/var/db/app.db
+      - APP_ENV=docker
+      - DEFAULT_LANG=en
+      - DEFAULT_TIMEZONE=Europe/Berlin
+      - BASE_CURRENCY=EUR
+      - INSTANCE_NAME=Part-DB
+      - ALLOW_ATTACHMENT_DOWNLOADS=1
+      - USE_GRAVATAR=1
 
 volumes:
   homeassistant:
@@ -304,3 +319,24 @@ volumes:
       type: nfs
       o: nfsvers=4,addr=${NFS_SERVER},rw
       device: ":/mnt/store/nfs/docker-volumes/mosquitto/config"
+  partdb-db:
+    name: partdb-db
+    driver: local
+    driver_opts:
+      type: nfs
+      o: nfsvers=4,addr=${NFS_SERVER},rw
+      device: ":/mnt/store/nfs/docker-volumes/partdb/db"
+  partdb-uploads:
+    name: partdb-uploads
+    driver: local
+    driver_opts:
+      type: nfs
+      o: nfsvers=4,addr=${NFS_SERVER},rw
+      device: ":/mnt/store/nfs/docker-volumes/partdb/uploads"
+  partdb-public_media:
+    name: partdb-public_media
+    driver: local
+    driver_opts:
+      type: nfs
+      o: nfsvers=4,addr=${NFS_SERVER},rw
+      device: ":/mnt/store/nfs/docker-volumes/partdb/public_media"
