@@ -35,6 +35,13 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
+  tunnel:
+    container_name: cloudflared-tunnel
+    image: cloudflare/cloudflared
+    restart: unless-stopped
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARED_TOKEN}
   # Media
   youtubedl:
     image: tzahi12345/youtubedl-material:latest
