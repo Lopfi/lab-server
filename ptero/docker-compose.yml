@@ -51,8 +51,8 @@ services:
     image: ghcr.io/pterodactyl/panel:latest
     restart: always
     ports:
-      - "80:80"
-      - "443:443"
+      - 80:80
+      - 443:443
     links:
       - database
       - cache
@@ -71,7 +71,7 @@ services:
       QUEUE_DRIVER: "redis"
       REDIS_HOST: "cache"
       DB_HOST: "database"
-      DB_PORT: "3306"
+      DB_PORT: 3306"
 networks:
   default:
     ipam:

@@ -12,7 +12,7 @@ services:
       - 2022:2022
     tty: true
     environment:
-      TZ: "UTC"
+      TZ: "Europe/Berlin"
       WINGS_UID: 988
       WINGS_GID: 988
       WINGS_USERNAME: pterodactyl
