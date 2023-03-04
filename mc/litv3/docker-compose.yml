@@ -15,6 +15,7 @@ services:
       CF_SLUG: "life-in-the-village-3"
       MEMORY: "10G"
       STOP_SERVER_ANNOUNCE_DELAY: "30"
+      CF_FILENAME_MATCHER: "1.5b"
       TZ: "Europe/Berlin"
 volumes:
   mc:
