@@ -16,7 +16,7 @@ services:
       STOP_SERVER_ANNOUNCE_DELAY: "30"
       CF_FILENAME_MATCHER: "1.5b"
       TZ: "Europe/Berlin"
-      CF_EXCLUDE_MODS: "270441 506898"
+      CF_EXCLUDE_MODS: "detail-armor-bar,itemphysic-lite"
 volumes:
   mc:
     name: mc-litv3
