@@ -35,6 +35,67 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
+  # Monitoring
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - /etc/prometheus:/etc/prometheus
+      - prometheus:/prometheus
+    restart: unless-stopped
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+  node_exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: node_exporter
+    ports:
+      - 9100:9100
+    command:
+      - "--path.rootfs=/host"
+    pid: host
+    restart: unless-stopped
+    volumes:
+      - /:/host:ro,rslave
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    ports:
+      - 8082:8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+    user: "1000"
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana:/var/lib/grafana
+    privileged: true
+  influxdb:
+    image: influxdb:latest
+    container_name: influxdb
+    restart: unless-stopped
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=${INFLUXDB_INIT_MODE}
+      - DOCKER_INFLUXDB_INIT_USERNAME=${INFLUXDB_INIT_USERNAME}
+      - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUXDB_INIT_PASSWORD}
+      - DOCKER_INFLUXDB_INIT_ORG=${INFLUXDB_INIT_ORG}
+      - DOCKER_INFLUXDB_INIT_BUCKET=${INFLUXDB_INIT_BUCKET}
+      - INFLUXD_LOG_LEVEL=${INFLUXD_LOG_LEVEL}
+      - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
+    ports:
+      - 8086:8086/tcp
+    volumes:
+      - influxdb:/var/lib/influxdb2
   # Media
   youtubedl:
     image: tzahi12345/youtubedl-material:latest
@@ -124,16 +185,6 @@ services:
       - mosquitto-config:/mosquitto/config/
       - mosquitto-log:/mosquitto/log/
       - mosquitto-data:/mosquitto/data/
-  grafana:
-    image: grafana/grafana:latest
-    container_name: grafana
-    restart: unless-stopped
-    user: "1000"
-    ports:
-      - 3000:3000
-    volumes:
-      - grafana:/var/lib/grafana
-    privileged: true
   esphome:
     image: esphome/esphome:latest
     container_name: esphome
@@ -146,24 +197,6 @@ services:
     volumes:
       - esphome:/config
     privileged: true
-  influxdb:
-    image: influxdb:latest
-    container_name: influxdb
-    restart: unless-stopped
-    environment:
-      - DOCKER_INFLUXDB_INIT_MODE=${INFLUXDB_INIT_MODE}
-      - DOCKER_INFLUXDB_INIT_USERNAME=${INFLUXDB_INIT_USERNAME}
-      - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUXDB_INIT_PASSWORD}
-      - DOCKER_INFLUXDB_INIT_ORG=${INFLUXDB_INIT_ORG}
-      - DOCKER_INFLUXDB_INIT_BUCKET=${INFLUXDB_INIT_BUCKET}
-      - INFLUXD_LOG_LEVEL=${INFLUXD_LOG_LEVEL}
-      - TZ=${TZ}
-      - PUID=${PUID}
-      - PGID=${PGID}
-    ports:
-      - 8086:8086/tcp
-    volumes:
-      - influxdb:/var/lib/influxdb2
   partdb:
     container_name: partdb
     ports:
