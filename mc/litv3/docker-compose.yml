@@ -11,7 +11,7 @@ services:
     environment:
       EULA: "TRUE"
       TYPE: "CURSEFORGE"
-      CF_SERVER_MOD: "https://www.curseforge.com/minecraft/modpacks/life-in-the-village-3/download/4420937/file"
+      CF_SERVER_MOD: "LITV3-Serverpack-1.9.zip"
       MEMORY: "10G"
       STOP_SERVER_ANNOUNCE_DELAY: "30"
       TZ: "Europe/Berlin"
