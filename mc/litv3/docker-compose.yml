@@ -11,12 +11,10 @@ services:
     environment:
       EULA: "TRUE"
       TYPE: "AUTO_CURSEFORGE"
-      CF_SLUG: "life-in-the-village-3"
+      CF_PAGE_URL: "https://www.curseforge.com/minecraft/modpacks/life-in-the-village-3/files/4420937"
       MEMORY: "10G"
       STOP_SERVER_ANNOUNCE_DELAY: "30"
-      CF_FILENAME_MATCHER: "1.5b"
       TZ: "Europe/Berlin"
-      CF_EXCLUDE_MODS: "detail-armor-bar,itemphysic-lite"
 volumes:
   mc:
     name: mc-litv3
