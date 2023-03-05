@@ -10,11 +10,12 @@ services:
       - mc:/data
     environment:
       EULA: "TRUE"
-      TYPE: "AUTO_CURSEFORGE"
+      TYPE: "CURSEFORGE"
       CF_PAGE_URL: "https://www.curseforge.com/minecraft/modpacks/life-in-the-village-3/files/4420937"
       MEMORY: "10G"
       STOP_SERVER_ANNOUNCE_DELAY: "30"
       TZ: "Europe/Berlin"
+      VERSION: "1.18.2"
 volumes:
   mc:
     name: mc-litv3
