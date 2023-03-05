@@ -3,7 +3,7 @@ version: "3.8"
 services:
   minecraft:
     container_name: mc-raad2
-    image: itzg/minecraft-server
+    image: itzg/minecraft-server:java8-jdk
     ports:
       - 25565:25565
     volumes:
