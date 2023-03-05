@@ -373,3 +373,10 @@ volumes:
       type: nfs
       o: nfsvers=4,addr=${NFS_SERVER},rw
       device: ":/mnt/store/nfs/docker-volumes/partdb/public_media"
+  prometheus:
+    name: prometheus
+    driver: local
+    driver_opts:
+      type: nfs
+      o: nfsvers=4,addr=${NFS_SERVER},rw
+      device: ":/mnt/store/nfs/docker-volumes/prometheus"
