@@ -60,7 +60,7 @@ services:
       - /:/host:ro,rslave
     privileged: true
   cadvisor:
-    image: gcr.io/cadvisor/cadvisor:v0.32.0
+    image: gcr.io/cadvisor/cadvisor:latest
     container_name: cadvisor
     ports:
       - 8082:8080
