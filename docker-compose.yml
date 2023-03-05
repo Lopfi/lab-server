@@ -58,6 +58,7 @@ services:
     restart: unless-stopped
     volumes:
       - /:/host:ro,rslave
+    privileged: true
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.46.0
     container_name: cadvisor
