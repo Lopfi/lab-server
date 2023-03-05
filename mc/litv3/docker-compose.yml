@@ -11,7 +11,7 @@ services:
     environment:
       EULA: "TRUE"
       TYPE: "CURSEFORGE"
-      CF_SERVER_MOD: "https://www.curseforge.com/minecraft/modpacks/life-in-the-village-3/download/4420937"
+      CF_SERVER_MOD: "https://www.curseforge.com/minecraft/modpacks/life-in-the-village-3/download/4420937/file"
       MEMORY: "10G"
       STOP_SERVER_ANNOUNCE_DELAY: "30"
       TZ: "Europe/Berlin"
