@@ -68,6 +68,8 @@ services:
       - /var/run:/var/run:rw
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
+    restart: unless-stopped
+    privileged: true
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
