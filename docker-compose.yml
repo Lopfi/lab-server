@@ -35,6 +35,7 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
+      - IPV6=yes
   # Monitoring
   prometheus:
     image: prom/prometheus:latest
