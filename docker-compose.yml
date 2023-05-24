@@ -36,6 +36,11 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
       - IPV6=yes
+  tunnel:
+    container_name: cloudflared-tunnel
+    image: cloudflare/cloudflared
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run --token eyJhIjoiZjk0OGI4NzRiMzM5NTlhMzhjZjNkNTg1NTgzNzc5YzAiLCJ0IjoiOGZmZjAxNjYtNmQ4Yy00ZWJlLTg2MjAtNDc2NDBjNDczYzI0IiwicyI6Ik16RmhaVEExTlRRdFltSXlaUzAwWm1Ka0xUbGxNR0l0TW1VM05EWTBPR05rT1RVNSJ9
   # Monitoring
   prometheus:
     image: prom/prometheus:latest
