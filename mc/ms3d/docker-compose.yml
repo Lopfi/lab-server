@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  minecraft:
+    container_name: mc-ms3d
+    image: itzg/minecraft-server
+    ports:
+      - 25565:25565
+    volumes:
+      - mc:/data
+    environment:
+      EULA: "TRUE"
+      TYPE: "CURSEFORGE"
+      CF_SERVER_MOD: "Modern+Skyblock-3.6.0+Server+File"
+      MEMORY: "10G"
+      STOP_SERVER_ANNOUNCE_DELAY: "30"
+      TZ: "Europe/Berlin"
+      VERSION: "1.12.2"
+volumes:
+  mc:
+    name: mc-ms3d
+    driver: local
+    driver_opts:
+      type: nfs
+      o: nfsvers=4,addr=truenas,rw
+      device: ":/mnt/store/nfs/docker-volumes/mc/modern-skyblock-3-departed"
