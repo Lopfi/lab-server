@@ -11,7 +11,7 @@ services:
     environment:
       EULA: "TRUE"
       TYPE: "CURSEFORGE"
-      CF_SERVER_MOD: "Modern+Skyblock-3.6.0+Server+File"
+      CF_SERVER_MOD: "Modern+Skyblock-3.6.0+Server+File.zip"
       MEMORY: "10G"
       STOP_SERVER_ANNOUNCE_DELAY: "30"
       TZ: "Europe/Berlin"
