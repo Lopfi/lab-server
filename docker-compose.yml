@@ -36,14 +36,6 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
       - IPV6=yes
-  coredns:
-    image: coredns/coredns
-    container_name: coredns
-    restart: unless-stopped
-    ports:
-      - 53:53
-    volumes:
-      - ./Corefile:/Corefile:ro
   # Monitoring
   grafana:
     image: grafana/grafana:latest
