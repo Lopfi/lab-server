@@ -179,9 +179,9 @@ services:
     ports:
       - 3002:80
     volumes:
-      - partdb-uploads:/var/www/html/uploads
-      - partdb-public_media:/var/www/html/public/media
-      - partdb-db:/var/www/html/var/db
+      - ./partdb/uploads:/var/www/html/uploads
+      - ./partdb/public_media:/var/www/html/public/media
+      - ./partdb/db:/var/www/html/var/db
     restart: unless-stopped
     image: jbtronics/part-db1:latest
     environment:
@@ -203,6 +203,7 @@ services:
       - PROVIDER_OCTOPART_SECRET=${PROVIDER_OCTOPART_SECRET}
       - PROVIDER_OCTOPART_SEARCH_LIMIT=10
       - PROVIDER_OCTOPART_ONLY_AUTHORIZED_SELLERS=true
+      - PROVIDER_MOUSER_KEY=${PROVIDER_MOUSER_KEY}
 
 volumes:
   homeassistant:
