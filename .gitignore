@@ -1,6 +1,0 @@
-mosquitto/password.txt
-homeassistant/
-calibre/
-pihole/
-wireguard/
-!wireguard/wg0.conf
