@@ -24,4 +24,4 @@ services:
     logging:
       driver: "none"
     volumes:
-      - ./db/:/data/db
+      - ytdl-db:/data/db
