@@ -17,3 +17,11 @@ services:
       - ytdl-video:/app/video
       - ytdl-subscriptions:/app/subscriptions
       - ytdl-users:/app/users
+    ytdl-mongo-db:
+    image: mongo:4.4.18
+    container_name: mongo-db
+    restart: unless-stopped
+    logging:
+      driver: "none"
+    volumes:
+      - ytdl-db:/data/db
