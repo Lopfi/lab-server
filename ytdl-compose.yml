@@ -12,7 +12,7 @@ services:
     ports:
       - 8998:17442
     volumes:
-      - ytdl-appdata:/app/appdata
+      - /home/robin/nfs/rdorst/00_Server/ytdl/ytdl-appdata:/app/appdata
       - ytdl-audio:/app/audio
       - ytdl-video:/app/video
       - ytdl-subscriptions:/app/subscriptions
@@ -25,3 +25,17 @@ services:
       driver: "none"
     volumes:
       - ytdl-db:/data/db
+
+volumes:
+  ytdl-appdata:
+    name: ytdl-appdata
+  ytdl-audio:
+    name: ytdl-audio
+  ytdl-video:
+    name: ytdl-video
+  ytdl-subscriptions:
+    name: ytdl-subscriptions
+  ytdl-users:
+    name: ytdl-users
+  ytdl-db:
+    name: ytdl-db
