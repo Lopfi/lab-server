@@ -12,11 +12,11 @@ services:
     ports:
       - 8998:17442
     volumes:
-      - ${NFS_FOLDER}/ytdl/appdata:/app/appdata
-      - ${NFS_FOLDER}/ytdl/audio:/app/audio
-      - ${NFS_FOLDER}/ytdl/subscriptions:/app/subscriptions
-      - ${NFS_FOLDER}/ytdl/users:/app/users
-      - ${NFS_FOLDER}/ytdl/video:/app/video
+      - /home/robin/nfs/rdorst/00_Server/ytdl/appdata:/app/appdata
+      - /home/robin/nfs/rdorst/00_Server/ytdl/audio:/app/audio
+      - /home/robin/nfs/rdorst/00_Server/ytdl/subscriptions:/app/subscriptions
+      - /home/robin/nfs/rdorst/00_Server/ytdl/users:/app/users
+      - /home/robin/nfs/rdorst/00_Server/ytdl/video:/app/video
   ytdl-mongo-db:
     image: mongo:4.4.18
     container_name: mongo-db
@@ -24,4 +24,4 @@ services:
     logging:
       driver: "none"
     volumes:
-      - ${NFS_FOLDER}/ytdl/db:/data/db
+      - /home/robin/nfs/rdorst/00_Server/ytdl/db:/data/db
