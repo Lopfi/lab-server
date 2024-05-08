@@ -17,3 +17,11 @@ services:
       - ${NFS_FOLDER}/ytdl/subscriptions:/app/subscriptions
       - ${NFS_FOLDER}/ytdl/users:/app/users
       - ${NFS_FOLDER}/ytdl/video:/app/video
+  ytdl-mongo-db:
+    image: mongo:4.4.18
+    container_name: mongo-db
+    restart: unless-stopped
+    logging:
+      driver: "none"
+    volumes:
+      - ${NFS_FOLDER}/ytdl/db:/data/db
