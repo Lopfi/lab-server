@@ -12,8 +12,8 @@ services:
     ports:
       - 8998:17442
     volumes:
-      - ytdl-appdata:/app/appdata
-      - ytdl-audio:/app/audio
-      - ytdl-video:/app/video
-      - ytdl-subscriptions:/app/subscriptions
-      - ytdl-users:/app/users
+      - ${NFS_FOLDER}/ytdl/appdata:/app/appdata
+      - ${NFS_FOLDER}/ytdl/audio:/app/audio
+      - ${NFS_FOLDER}/ytdl/subscriptions:/app/subscriptions
+      - ${NFS_FOLDER}/ytdl/users:/app/users
+      - ${NFS_FOLDER}/ytdl/video:/app/video
