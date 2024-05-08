@@ -9,8 +9,6 @@ services:
       ytdl_mongodb_connection_string: "mongodb://ytdl-mongo-db:27017"
       ytdl_use_local_db: "true"
       write_ytdl_config: "true"
-    ports:
-      - 8998:17442
     volumes:
       - /home/robin/nfs/rdorst/00_Server/ytdl/appdata:/app/appdata
       - /home/robin/nfs/rdorst/00_Server/ytdl/audio:/app/audio
