@@ -24,4 +24,4 @@ services:
     logging:
       driver: "none"
     volumes:
-      - /home/robin/nfs/rdorst/00_Server/ytdl/db:/data/db
+      - ytdl-db:/data/db
