@@ -1,0 +1,33 @@
+services:
+  vaultwarden:
+    container_name: vaultwarden
+    image: 'vaultwarden/server:latest'
+    environment:
+      - 'DOMAIN=http://vaultwarden.rdorst.dev'
+      - 'SIGNUPS_ALLOWED=true'
+    volumes:
+      - 'vaultwarden-data:/data'
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - '-f'
+        - 'http://127.0.0.1:80'
+      interval: 2s
+      timeout: 10s
+      retries: 15
+    networks:
+      - caddy
+    labels:
+      - "dockflare.enable=true"
+      - "dockflare.hostname=vaultwarden.rdorst.dev"
+      - "dockflare.service=http://vaultwarden:80"
+networks:
+  caddy:
+    external: true
+    name: caddy
+volumes:
+  vaultwarden-data:
+      external: true
+      name: vaultwarden-data
+

@@ -1,0 +1,14 @@
+vaultwarden.rdorst.dev {
+	reverse_proxy vaultwarden:80
+	tls {
+			dns cloudflare {$CLOUDFLARE_API_TOKEN}
+	}
+}
+
+test.rdorst.dev {
+	respond "Caddy proxy is working" 200
+}
+
+proxy-test.rdorst.dev {
+	reverse_proxy http://httpbin.org
+}
