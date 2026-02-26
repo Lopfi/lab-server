@@ -21,13 +21,13 @@ services:
       timeout: 20s
       retries: 10
     networks:
-      - cloudflared
+      - caddy
     labels:
       - "dockflare.enable=true"
       - "dockflare.hostname=dash.rdorst.dev"
       - "dockflare.service=http://homarr:7575"
 
 networks:
-  cloudflared:
+  caddy:
     external: true
-    name: cloudflared
+    name: caddy

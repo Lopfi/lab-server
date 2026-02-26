@@ -1,7 +1,8 @@
 services:
   caddy:
     container_name: caddy
-    image: caddy:latest
+    build: .
+    image: caddy:custom
     env_file:
       - .env
     restart: unless-stopped

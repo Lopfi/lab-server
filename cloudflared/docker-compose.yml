@@ -1,6 +1,3 @@
-# DockFlare 3.0 with Redis and security hardening
-version: '3.8'
-
 services:
   docker-socket-proxy:
     image: tecnativa/docker-socket-proxy:v0.4.1

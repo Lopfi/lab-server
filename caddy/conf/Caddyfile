@@ -5,10 +5,15 @@ vaultwarden.rdorst.dev {
 	}
 }
 
-test.rdorst.dev {
-	respond "Caddy proxy is working" 200
+# Local development / LAN entries for *.home.lab
+# Using 'tls internal' issues certificates signed by Caddy's local CA. You must
+# trust Caddy's CA on client devices to avoid browser warnings.
+home.lab {
+	respond "This is the home.lab gateway" 200
+	tls internal
 }
 
-proxy-test.rdorst.dev {
-	reverse_proxy http://httpbin.org
+vaultwarden.home.lab {
+	reverse_proxy vaultwarden:80
+	tls internal
 }

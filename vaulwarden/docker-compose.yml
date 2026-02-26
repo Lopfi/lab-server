@@ -3,7 +3,7 @@ services:
     container_name: vaultwarden
     image: 'vaultwarden/server:latest'
     environment:
-      - 'DOMAIN=http://vaultwarden.rdorst.dev'
+      - 'DOMAIN=http://vaultwarden.home.lab'
       - 'SIGNUPS_ALLOWED=true'
     volumes:
       - 'vaultwarden-data:/data'
@@ -18,10 +18,6 @@ services:
       retries: 15
     networks:
       - caddy
-    labels:
-      - "dockflare.enable=true"
-      - "dockflare.hostname=vaultwarden.rdorst.dev"
-      - "dockflare.service=http://vaultwarden:80"
 networks:
   caddy:
     external: true
