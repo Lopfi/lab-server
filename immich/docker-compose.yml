@@ -19,6 +19,9 @@ services:
     restart: always
     healthcheck:
       disable: false
+    networks:
+      - caddy
+      - default
 
   immich-machine-learning:
     container_name: immich_machine_learning
@@ -67,3 +70,8 @@ volumes:
       type: nfs
       o: 'nfsvers=4,addr=192.168.178.201,rw'
       device: ':/mnt/store/server/immich/upload'
+
+networks:
+  caddy:
+    external: true
+    name: caddy

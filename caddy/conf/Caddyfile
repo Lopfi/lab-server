@@ -20,7 +20,7 @@ docker.rdorst.dev {
 }
 
 immich.rdorst.dev {
-	reverse_proxy immich:2283
+	reverse_proxy immich-server:2283
 	tls {
 			dns cloudflare {$CLOUDFLARE_API_TOKEN}
 	}
