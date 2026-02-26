@@ -8,7 +8,12 @@
 
 rdorst.dev:53 {
     hosts {
-        192.168.178.202 vaultwarden.rdorst.dev
+        192.168.178.103 ha.rdorst.dev
+    }
+
+    template IN A {
+        match ^(.+)\.rdorst\.dev\.$
+        answer "{{ .Name }} 60 IN A 192.168.178.202"
     }
     log
     errors
