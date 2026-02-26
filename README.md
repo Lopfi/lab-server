@@ -29,3 +29,12 @@ Add this under path to calibre in settings
 ## prometheus
 
 copy the prometheus.yml to /etc/prometheus/prometheus.yml
+
+
+# TODOs
+
+- [ ] Add labels for autoupdates through dockhand
+- [ ] Add docker caddy for proxy through labels
+- [ ] Add healthchecks for all containers
+- [ ] check restart policies for all containers
+- [ ] Add monitoring for all containers through prometheus and caddy exporter
