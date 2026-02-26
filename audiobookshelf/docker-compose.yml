@@ -1,0 +1,44 @@
+services:
+  audiobookshelf:
+    container_name: audiobookshelf
+    image: 'ghcr.io/advplyr/audiobookshelf:latest'
+    restart: unless-stopped
+    environment:
+      TZ: Europe/Berlin
+    volumes:
+      - audiobookshelf-audiobooks:/audiobooks
+      - audiobookshelf-config:/config
+      - audiobookshelf-metadata:/metadata
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - 'wget --quiet --tries=1 --timeout=5 http://localhost:80/ping -O /dev/null || exit 1'
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    networks:
+      - caddy
+volumes:
+  audiobookshelf-audiobooks:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: 'nfsvers=4,addr=192.168.178.201,rw'
+      device: ':/mnt/store/server/audiobookshelf/audiobooks'
+  audiobookshelf-config:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: 'nfsvers=4,addr=192.168.178.201,rw'
+      device: ':/mnt/store/server/audiobookshelf/config'
+  audiobookshelf-metadata:
+    driver: local
+    driver_opts:  
+      type: nfs
+      o: 'nfsvers=4,addr=192.168.178.201,rw'
+      device: ':/mnt/store/server/audiobookshelf/metadata'
+networks:
+  caddy:
+    name: caddy
+    external: true

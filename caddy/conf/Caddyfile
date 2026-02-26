@@ -18,3 +18,24 @@ docker.rdorst.dev {
 			dns cloudflare {$CLOUDFLARE_API_TOKEN}
 	}
 }
+
+immich.rdorst.dev {
+	reverse_proxy immich:2283
+	tls {
+			dns cloudflare {$CLOUDFLARE_API_TOKEN}
+	}
+}
+
+affine.rdorst.dev {
+	reverse_proxy affine:3010
+	tls {
+			dns cloudflare {$CLOUDFLARE_API_TOKEN}
+	}
+}
+
+audio.rdorst.dev {
+	reverse_proxy audiobookshelf:80
+	tls {
+			dns cloudflare {$CLOUDFLARE_API_TOKEN}
+	}
+}
