@@ -5,7 +5,7 @@ services:
     image: caddy:custom
     env_file:
       - .env
-    restart: unless-stopped
+    restart: always
     ports:
       - "80:80"
       - "443:443"
@@ -13,8 +13,8 @@ services:
     volumes:
       - ./conf:/etc/caddy
       - ./site:/srv
-      - caddy_data:/data
-      - caddy_config:/config
+      - data:/data
+      - config:/config
     networks:
       - caddy
 networks:
@@ -22,5 +22,5 @@ networks:
     external: true
     name: caddy
 volumes:
-  caddy_data:
-  caddy_config:
+  data:
+  config:
