@@ -1,0 +1,100 @@
+services:
+  affine:
+    container_name: affine
+    image: 'ghcr.io/toeverything/affine:stable'
+    depends_on:
+      - redis
+      - postgres
+    volumes:
+      - '/mnt/server/affine/config:/root/.affine/config'
+      - '/mnt/server/affine/storage:/root/.affine/storage'
+    logging:
+      driver: json-file
+      options:
+        max-size: 1000m
+    environment:
+      AFFINE_CONFIG_PATH: /root/.affine/config
+      REDIS_SERVER_HOST: redis
+      DATABASE_URL: 'postgres://${USER_POSTGRES}:${PASSWORD_POSTGRES}@postgres:5432/affine'
+      NODE_ENV: production
+      AFFINE_SERVER_HOST: ${URL_AFFINE}
+      AFFINE_SERVER_EXTERNAL_URL: ${URL_AFFINE}
+      MAILER_HOST: '${MAILER_HOST}'
+      MAILER_PORT: '${MAILER_PORT}'
+      MAILER_USER: '${MAILER_USER}'
+      MAILER_PASSWORD: '${MAILER_PASSWORD}'
+      MAILER_SENDER: '${MAILER_SENDER}'
+      COPILOT_FAL_API_KEY: '${COPILOT_FAL_API_KEY}'
+      COPILOT_PERPLEXITY_API_KEY: '${COPILOT_PERPLEXITY_API_KEY}'
+      COPILOT_OPENAI_API_KEY: '${COPILOT_OPENAI_API_KEY}'
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - "bash -c ':> /dev/tcp/127.0.0.1/3010' || exit 1"
+      interval: 5s
+      timeout: 20s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - default
+      - caddy
+  affine_migration:
+    container_name: affine-migration
+    image: 'ghcr.io/toeverything/affine:stable'
+    restart: on-failure
+    volumes:
+      - '/mnt/server/affine/storage:/root/.affine/storage'
+      - '/mnt/server/affine/config:/root/.affine/config'
+    command:
+      - sh
+      - '-c'
+      - 'node ./scripts/self-host-predeploy.js'
+    environment:
+      REDIS_SERVER_HOST: redis
+      DATABASE_URL: 'postgres://${USER_POSTGRES}:${PASSWORD_POSTGRES}@postgres:5432/affine'
+      AFFINE_INDEXER_ENABLED: 'false'
+    depends_on:
+      - postgres
+      - redis
+  redis:
+    container_name: affine-redis
+    image: redis
+    volumes:
+      - 'redis-data:/data'
+    healthcheck:
+      test:
+        - CMD
+        - redis-cli
+        - '--raw'
+        - incr
+        - ping
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+  postgres:
+    container_name: affine-postgres
+    image: 'pgvector/pgvector:pg16'
+    volumes:
+      - 'postgres-data:/var/lib/postgresql/data'
+    healthcheck:
+      test: 
+        ["CMD-SHELL", "sh -c 'pg_isready -U ${USER_POSTGRES} -d affine'"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    environment:
+      POSTGRES_USER: '${USER_POSTGRES}'
+      POSTGRES_PASSWORD: '${PASSWORD_POSTGRES}'
+      POSTGRES_DB: 'affine'
+      PGDATA: /var/lib/postgresql/data/postgres-data
+    restart: unless-stopped
+
+networks:
+  caddy:
+    external: true
+    name: caddy
+
+volumes:
+  redis-data:
+  postgres-data:
