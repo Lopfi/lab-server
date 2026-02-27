@@ -39,3 +39,10 @@ audio.rdorst.dev {
 			dns cloudflare {$CLOUDFLARE_API_TOKEN}
 	}
 }
+
+parts.rdorst.dev {
+	reverse_proxy partdb:80
+	tls {
+			dns cloudflare {$CLOUDFLARE_API_TOKEN}
+	}
+}

@@ -1,0 +1,24 @@
+services:
+  partdb:
+    container_name: partdb
+    volumes:
+      - uploads:/var/www/html/uploads
+      - public_media:/var/www/html/public/media
+      - db:/var/www/html/var/db
+    restart: unless-stopped
+    image: jbtronics/part-db1:latest
+    env_file:
+      - .env
+      - ../.env_default
+    networks:
+      - caddy
+
+networks:
+  caddy:
+    name: caddy
+    external: true
+
+volumes:
+  uploads:
+  public_media:
+  db:
