@@ -46,3 +46,36 @@ parts.rdorst.dev {
 			dns cloudflare {$CLOUDFLARE_API_TOKEN}
 	}
 }
+
+travel.rdorst.dev {
+	reverse_proxy adventurelog-frontend:3000
+	tls {
+			dns cloudflare {$CLOUDFLARE_API_TOKEN}
+	}
+}
+
+adventure.rdorst.dev {
+	# Serve media files directly from the host-mounted media directory.
+	# This handles public /media/* requests without hitting the backend.
+	handle_path /media/* {
+		root * /srv/media
+		uri strip_prefix /media
+		file_server
+	}
+	reverse_proxy adventurelog-backend:8000 {
+		# If the backend responds with an X-Accel-Redirect header (used to delegate
+		# protected media serving), let Caddy rewrite to that internal path and
+		# serve the file from the mounted media directory.
+		handle_response {
+				# backend sets X-Accel-Redirect like: /protectedMedia/flags/bm.png
+				# capture the path after the internal prefix so we can serve from /srv/media
+				@hasAccel header_regexp XAccel X-Accel-Redirect ^/protectedMedia(?P<path>/.*)$
+				rewrite @hasAccel {re.XAccel.path}
+			root * /srv/media
+			file_server
+		}
+	}
+	tls {
+		dns cloudflare {$CLOUDFLARE_API_TOKEN}
+	}
+}

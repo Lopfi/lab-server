@@ -1,0 +1,43 @@
+services:
+  web:
+    image: "ghcr.io/seanmorley15/adventurelog-frontend:latest"
+    container_name: adventurelog-frontend
+    restart: unless-stopped
+    env_file:
+      - .env
+    depends_on:
+      - server
+    networks:
+      - default
+      - caddy
+  server:
+    image: "ghcr.io/seanmorley15/adventurelog-backend:latest"
+    container_name: adventurelog-backend
+    restart: unless-stopped
+    env_file:
+      - .env
+    depends_on:
+      - db
+    volumes:
+      - "/mnt/server/misc/adventure-log/media:/code/media/"
+    networks:
+      - default
+      - caddy
+  db:
+    image: "postgis/postgis:16-3.5"
+    container_name: adventurelog-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=database
+      - POSTGRES_USER=adventure
+      - POSTGRES_PASSWORD=changeme123
+    volumes:
+      - "db:/var/lib/postgresql/data"
+
+networks:
+  caddy:
+    name: caddy
+    external: true
+
+volumes:
+  db:
