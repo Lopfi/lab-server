@@ -2,6 +2,7 @@ services:
   vaultwarden:
     container_name: vaultwarden
     image: 'vaultwarden/server:latest'
+    restart: unless-stopped
     environment:
       - 'DOMAIN=http://vaultwarden.home.lab'
       - 'SIGNUPS_ALLOWED=true'
