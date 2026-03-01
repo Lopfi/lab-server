@@ -86,3 +86,17 @@ todo.rdorst.dev {
 			dns cloudflare {$CLOUDFLARE_API_TOKEN}
 	}
 }
+
+grafana.rdorst.dev {
+	reverse_proxy grafana:3000
+	tls {
+			dns cloudflare {$CLOUDFLARE_API_TOKEN}
+	}
+}
+
+alloy.rdorst.dev {
+	reverse_proxy alloy:12345
+	tls {
+			dns cloudflare {$CLOUDFLARE_API_TOKEN}
+	}
+}
