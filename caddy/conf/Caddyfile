@@ -79,3 +79,10 @@ adventure.rdorst.dev {
 		dns cloudflare {$CLOUDFLARE_API_TOKEN}
 	}
 }
+
+todo.rdorst.dev {
+	reverse_proxy donetick:2021
+	tls {
+			dns cloudflare {$CLOUDFLARE_API_TOKEN}
+	}
+}
