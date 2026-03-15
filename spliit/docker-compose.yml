@@ -2,7 +2,7 @@ name: spliit
 services:
   db:
     image: 'postgres:16.3-alpine'
-    container_name: spliit_db
+    container_name: spliit-db
     volumes:
       - 'db:/var/lib/postgresql/data'
     environment:
