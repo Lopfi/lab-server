@@ -10,6 +10,13 @@ services:
     networks:
       - default
       - caddy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000', r => process.exit(r.statusCode===200?0:1)).on('error',()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
   server:
     image: "ghcr.io/seanmorley15/adventurelog-backend:latest"
     container_name: adventurelog-backend
@@ -23,6 +30,12 @@ services:
     networks:
       - default
       - caddy
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000').read()"]
+      interval: 30s
+      retries: 3
+      start_period: 10s
+      timeout: 5s
   db:
     image: "postgis/postgis:16-3.5"
     container_name: adventurelog-db
@@ -33,6 +46,15 @@ services:
       - POSTGRES_PASSWORD=changeme123
     volumes:
       - "db:/var/lib/postgresql/data"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          'psql -U adventure -d database -c "SELECT ST_Buffer( ST_SetSRID(''POINT(0 0)''::GEOMETRY, 4326), 1) AS geom ;"',
+        ]
+      interval: 2s
+      timeout: 1s
+      retries: 5
 
 networks:
   caddy:
