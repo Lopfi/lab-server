@@ -38,3 +38,27 @@ copy the prometheus.yml to /etc/prometheus/prometheus.yml
 - [ ] Add healthchecks for all containers
 - [ ] check restart policies for all containers
 - [ ] Add monitoring for all containers through prometheus and caddy exporter
+    - https://github.com/Checkmk/checkmk
+- [ ] Add donetick config to git without the token
+- [ ] Setup cloudflare tunnels again
+- [ ] switch to different dashboard
+- [ ] add authentic for all supported applications
+- [ ] https://github.com/ChrispyBacon-dev/DockFlare
+- [ ] https://pegaprox.com/
+https://github.com/IT-BAER/proxmorph?tab=readme-ov-file
+
+## Services to add
+
+- [ ] uptime-kuma
+- [ ] patchmon
+- [ ] rustdesk
+- [ ] rackpeek
+- [ ] termix ssh
+- [ ] SparkyFitness
+- [ ] Calibre-web automated
+- [ ] Kurrier
+- [ ] dashy
+- [ ] zabbix
+
+## Arr
+- [ ] MyDia

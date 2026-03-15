@@ -100,3 +100,17 @@ alloy.rdorst.dev {
 			dns cloudflare {$CLOUDFLARE_API_TOKEN}
 	}
 }
+
+uptime.rdorst.dev {
+	reverse_proxy uptime-kuma:3001
+	tls {
+			dns cloudflare {$CLOUDFLARE_API_TOKEN}
+	}
+}
+
+spliit.rdorst.dev {
+	reverse_proxy spliit:3000
+	tls {
+			dns cloudflare {$CLOUDFLARE_API_TOKEN}
+	}
+}
