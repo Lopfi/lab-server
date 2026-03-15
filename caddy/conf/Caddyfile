@@ -114,3 +114,10 @@ spliit.rdorst.dev {
 			dns cloudflare {$CLOUDFLARE_API_TOKEN}
 	}
 }
+
+dashy.rdorst.dev {
+	reverse_proxy dashy:8080
+	tls {
+			dns cloudflare {$CLOUDFLARE_API_TOKEN}
+	}
+}

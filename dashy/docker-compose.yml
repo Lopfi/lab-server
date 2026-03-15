@@ -1,0 +1,21 @@
+services:
+  dashy:
+    image: lissy93/dashy
+    container_name: dashy
+    volumes:
+      - ./config.yml:/app/user-data/conf.yml
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD', 'node', '/app/services/healthcheck']
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - caddy
+  
+networks:
+  caddy:
+    external: true

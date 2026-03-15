@@ -1,0 +1,81 @@
+pageInfo:
+  title: Home Lab Dashboard
+sections:
+  - name: Internal Services
+    icon: far fa-cloud
+    items:
+      - title: Vaultwarden
+        description: Password Manager
+        icon: fas fa-key
+        url: https://vaultwarden.rdorst.dev
+      - title: Dashy
+        description: Personal Dashboard
+        icon: fas fa-th-large
+        url: https://dashy.rdorst.dev
+      - title: Homarr
+        description: Home Management
+        icon: fas fa-home
+        url: https://dash.rdorst.dev
+      - title: Dockhand
+        description: Docker Management
+        icon: fab fa-docker
+        url: https://docker.rdorst.dev
+      - title: Immich
+        description: Photo Management
+        icon: fas fa-images
+        url: https://immich.rdorst.dev
+      - title: Affine
+        description: Knowledge Base
+        icon: fas fa-book
+        url: https://affine.rdorst.dev
+      - title: Audiobookshelf
+        description: Audiobook Server
+        icon: fas fa-headphones
+        url: https://audio.rdorst.dev
+      - title: PartDB
+        description: Parts Inventory
+        icon: fas fa-cogs
+        url: https://parts.rdorst.dev
+      - title: Adventure Log
+        description: Travel Journal Frontend
+        icon: fas fa-map-marked-alt
+        url: https://travel.rdorst.dev
+      - title: Donetick
+        description: To-Do List
+        icon: fas fa-tasks
+        url: https://todo.rdorst.dev
+      - title: Grafana
+        description: Metrics & Dashboards
+        icon: fas fa-chart-line
+        url: https://grafana.rdorst.dev
+      - title: Alloy
+        description: Alloy Service
+        icon: fas fa-atom
+        url: https://alloy.rdorst.dev
+      - title: Uptime Kuma
+        description: Uptime Monitoring
+        icon: fas fa-heartbeat
+        url: https://uptime.rdorst.dev
+      - title: Spliit
+        description: Bill Splitting
+        icon: fas fa-divide
+        url: https://spliit.rdorst.dev
+  - name: External Tools
+    icon: fas fa-toolbox
+    items:
+      - title: IT Tools
+        description: All-in-one developer toolbox
+        icon: fas fa-wrench
+        url: https://it-tools.tech/
+      - title: Vert
+        description: Terminal tools in your browser
+        icon: fas fa-terminal
+        url: https://vert.sh/
+      - title: Webpifier
+        description: Convert images to WebP
+        icon: fas fa-image
+        url: https://www.webpifier.com/
+      - title: Cloudflare Dashboard
+        description: Manage Cloudflare services
+        icon: fab fa-cloudflare
+        url: https://one.dash.cloudflare.com/

@@ -46,7 +46,7 @@ copy the prometheus.yml to /etc/prometheus/prometheus.yml
 - [ ] https://github.com/ChrispyBacon-dev/DockFlare
 - [ ] https://pegaprox.com/
 https://github.com/IT-BAER/proxmorph?tab=readme-ov-file
-
+- [ ] https://github.com/jeppestaerk/dashy-docker-sync
 ## Services to add
 
 - [ ] uptime-kuma
