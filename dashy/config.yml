@@ -60,6 +60,10 @@ sections:
         description: Bill Splitting
         icon: fas fa-divide
         url: https://spliit.rdorst.dev
+      - title: Dockge Truenas
+        description: Docker Compose on Truenas
+        icon: fab fa-docker
+        url: http://192.168.178.201:31014/
   - name: External Tools
     icon: fas fa-toolbox
     items:
