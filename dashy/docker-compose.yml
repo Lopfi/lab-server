@@ -13,6 +13,8 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
+    ports:
+      - '3002:8080'
     networks:
       - caddy
   

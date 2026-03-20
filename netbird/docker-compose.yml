@@ -1,0 +1,17 @@
+services:
+  netbird-client:
+      container_name: netbird-client
+      hostname: docker-homelab
+      cap_add:
+          - NET_ADMIN
+          - SYS_ADMIN
+          - SYS_RESOURCE
+      network_mode: host
+      environment:
+          - NB_SETUP_KEY=${NB_SETUP_KEY}
+      volumes:
+          - netbird-client:/var/lib/netbird
+      image: netbirdio/netbird:latest
+volumes:
+  netbird-client:
+      name: netbird-client

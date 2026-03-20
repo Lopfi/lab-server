@@ -3,6 +3,8 @@ services:
     image: donetick/donetick
     container_name: donetick
     restart: unless-stopped
+    ports:
+      - '3006:2021'
     volumes:
       - data:/donetick-data
       - ./config:/config

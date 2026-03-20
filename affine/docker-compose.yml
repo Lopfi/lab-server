@@ -2,6 +2,8 @@ services:
   affine:
     container_name: affine
     image: 'ghcr.io/toeverything/affine:stable'
+    ports:
+      - '3005:3010'
     depends_on:
       - redis
       - postgres

@@ -1,11 +1,13 @@
 services:
   partdb:
     container_name: partdb
+    restart: unless-stopped
+    ports:
+      - '3007:80'
     volumes:
       - uploads:/var/www/html/uploads
       - public_media:/var/www/html/public/media
       - db:/var/www/html/var/db
-    restart: unless-stopped
     image: jbtronics/part-db1:latest
     env_file:
       - .env

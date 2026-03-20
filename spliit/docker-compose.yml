@@ -24,6 +24,8 @@ services:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
     restart: unless-stopped
+    ports:
+      - '3001:3000'
     networks:
       - default
       - caddy
