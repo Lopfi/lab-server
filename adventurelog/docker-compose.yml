@@ -3,10 +3,15 @@ services:
     image: "ghcr.io/seanmorley15/adventurelog-frontend:latest"
     container_name: adventurelog-frontend
     restart: unless-stopped
-    env_file:
-      - .env
+    ports:
+      - "3008:3000"
+    environment:
+      - PUBLIC_SERVER_URL=http://server:8000
+      - ORIGIN=https://travel.rdorst.dev
+      - BODY_SIZE_LIMIT=Infinity
     depends_on:
-      - server
+      server:
+        condition: service_healthy
     networks:
       - default
       - caddy
@@ -21,10 +26,13 @@ services:
     image: "ghcr.io/seanmorley15/adventurelog-backend:latest"
     container_name: adventurelog-backend
     restart: unless-stopped
+    ports:
+      - "3009:80"
     env_file:
       - .env
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
       - "/mnt/server/misc/adventure-log/media:/code/media/"
     networks:
@@ -32,9 +40,9 @@ services:
       - caddy
     healthcheck:
       test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000').read()"]
-      interval: 30s
-      retries: 3
-      start_period: 10s
+      interval: 10s
+      retries: 10
+      start_period: 30s
       timeout: 5s
   db:
     image: "postgis/postgis:16-3.5"

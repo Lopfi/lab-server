@@ -6,6 +6,8 @@
 3005 : affine
 3006 : donetick
 3007 : partdb
+3008 : adventurelog frontend
+3009 : adventurelog backend
 
 
 2283 : immich

@@ -13,8 +13,6 @@ services:
     volumes:
       - ./conf:/etc/caddy
       - ./site:/srv
-      # mount adventurelog media so Caddy can serve protected media via X-Accel-Redirect
-      - /mnt/server/misc/adventure-log/media:/srv/media:ro
       - data:/data
       - config:/config
     networks:
