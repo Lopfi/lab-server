@@ -4,6 +4,14 @@ sections:
   - name: Internal Services
     icon: far fa-cloud
     items:
+      - title: Speedserver
+        description: Proxmox Host
+        icon: fas fa-server
+        url: http://speedserver:8006
+      - title: Truenas
+        description: NAS Management
+        icon: fas fa-hdd
+        url: http://http://192.168.178.201
       - title: Vaultwarden
         description: Password Manager
         icon: fas fa-key
@@ -52,6 +60,10 @@ sections:
         description: Home Automation
         icon: fas fa-home
         url: https://home.rdorst.dev
+      - title: Paperless
+        description: Document Management
+        icon: fas fa-file-alt
+        url: https://papers.rdorst.dev
   - name: External Tools
     icon: fas fa-toolbox
     items:
