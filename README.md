@@ -33,20 +33,17 @@ copy the prometheus.yml to /etc/prometheus/prometheus.yml
 
 # TODOs
 
-- [ ] Add labels for autoupdates through dockhand
+- [x] Add labels for autoupdates through dockhand
 - [ ] Add docker caddy for proxy through labels
 - [ ] Add healthchecks for all containers
 - [ ] check restart policies for all containers
-- [ ] Add monitoring for all containers through prometheus and caddy exporter
-    - https://github.com/Checkmk/checkmk
 - [ ] Add donetick config to git without the token
-- [ ] Setup cloudflare tunnels again
-- [ ] switch to different dashboard
 - [ ] add authentic for all supported applications
-- [ ] https://github.com/ChrispyBacon-dev/DockFlare
 - [ ] https://pegaprox.com/
 https://github.com/IT-BAER/proxmorph?tab=readme-ov-file
 - [ ] https://github.com/jeppestaerk/dashy-docker-sync
+
+
 ## Services to add
 
 - [ ] uptime-kuma
@@ -57,7 +54,7 @@ https://github.com/IT-BAER/proxmorph?tab=readme-ov-file
 - [ ] SparkyFitness
 - [ ] Calibre-web automated
 - [ ] Kurrier
-- [ ] dashy
+- [x] dashy
 - [ ] zabbix
 
 ## Arr
