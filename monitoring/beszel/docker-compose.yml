@@ -10,6 +10,11 @@ services:
     volumes:
       - ./beszel_data:/beszel_data
       - ./beszel_socket:/beszel_socket
+    healthcheck:
+      # The URL is relative to the container, not the host
+      test: ['CMD', '/beszel', 'health', '--url', 'http://localhost:8090']
+      start_period: 5s # Check 5 seconds after the container starts
+      interval: 120s # Then check every 120 seconds after that
     networks:
       - caddy
 
@@ -27,6 +32,9 @@ services:
       HUB_URL: http://localhost:8090
       TOKEN: ${TOKEN}
       KEY: "${PUBLIC_KEY}"
+    healthcheck:
+      test: ['CMD', '/agent', 'health']
+      interval: 120s
 
 networks:
   caddy:

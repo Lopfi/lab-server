@@ -34,8 +34,8 @@ copy the prometheus.yml to /etc/prometheus/prometheus.yml
 # TODOs
 
 - [x] Add labels for autoupdates through dockhand
+- [x] Add healthchecks for all containers
 - [ ] Add docker caddy for proxy through labels
-- [ ] Add healthchecks for all containers
 - [ ] check restart policies for all containers
 - [ ] Add donetick config to git without the token
 - [ ] add authentic for all supported applications

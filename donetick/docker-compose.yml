@@ -12,6 +12,11 @@ services:
       - DT_ENV=selfhosted
       - DT_SQLITE_PATH=/donetick-data/donetick.db
       - TZ=Europe/Berlin
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:2021/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
     networks:
       - caddy
 
