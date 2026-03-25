@@ -9,6 +9,7 @@
 3008 : adventurelog frontend
 3009 : adventurelog backend
 3010 : paperless
+3011 : tandoor
 
 2283 : immich
 8090 : beszel
