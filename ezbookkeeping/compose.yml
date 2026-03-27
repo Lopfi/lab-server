@@ -1,0 +1,17 @@
+services:
+  ezbookkeeping:
+    image: mayswind/ezbookkeeping
+    container_name: ezbookkeeping
+    restart: unless-stopped
+    ports:
+      - "3012:8080"
+    environment:
+      - EBK_SERVER_DOMAIN=finance.rdorst.dev
+      - EBK_SECURITY_SECRET_KEY=${EBK_SECURITY_SECRET_KEY}
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - "storage:/ezbookkeeping/storage"
+      - "data:/ezbookkeeping/data"
+volumes:
+  storage:
+  data:

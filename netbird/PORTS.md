@@ -10,6 +10,7 @@
 3009 : adventurelog backend
 3010 : paperless
 3011 : tandoor
+3012 : ezbookkeeping
 
 2283 : immich
 8090 : beszel
