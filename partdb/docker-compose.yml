@@ -8,6 +8,7 @@ services:
       - uploads:/var/www/html/uploads
       - public_media:/var/www/html/public/media
       - db:/var/www/html/var/db
+      - cache:/var/www/html/var/cache
     image: jbtronics/part-db1:latest
     env_file:
       - .env
@@ -32,3 +33,4 @@ volumes:
   uploads:
   public_media:
   db:
+  cache:
