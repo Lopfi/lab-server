@@ -60,10 +60,21 @@ services:
     restart: always
     healthcheck:
       disable: false
+  
+  power-tools:
+    container_name: immich_power_tools
+    image: ghcr.io/immich-power-tools/immich-power-tools:latest
+    volumes:
+      - power-tools-data:/app/data
+    ports:
+      - "8001:3000"
+    env_file:
+      - .env
 
 volumes:
   database:
   model-cache:
+  power-tools-data:
   uploads:
     driver: local
     driver_opts:
