@@ -11,6 +11,8 @@
 3010 : paperless
 3011 : tandoor
 3012 : ezbookkeeping
+3013 : jellyfin
+3014 : jellystat
 
 2283 : immich
 8090 : beszel

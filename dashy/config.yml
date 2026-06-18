@@ -64,6 +64,23 @@ sections:
         description: Document Management
         icon: fas fa-file-alt
         url: https://papers.rdorst.dev
+      - title: Tandoor
+        description: Recipe Management
+        icon: fas fa-utensils
+        url: https://recipes.rdorst.dev
+      - title: EZBookkeeping
+        description: Personal Finance
+        icon: fas fa-wallet
+        url: https://finance.rdorst.dev
+      - title: Jellyfin
+        description: Media Server
+        icon: fas fa-film
+        url: https://jellyfin.rdorst.dev
+      - title: Jellystat
+        description: Jellyfin Analytics
+        icon: fas fa-chart-bar
+        url: https://jellystat.rdorst.dev
+      
   - name: External Tools
     icon: fas fa-toolbox
     items:
@@ -87,3 +104,27 @@ sections:
         description: PDF Tools in your browser
         icon: fas fa-file-pdf
         url: https://bentopdf.com/
+  - name: Infos
+    icon: fas fa-info-circle
+    widgets:
+      - type: clock
+        options:
+          timeZone: Europe/Berlin
+          format: en-GB
+          hideDate: false
+      # MVG widgets are currently broken - MVG shut down their /api/fib/v2/ endpoint
+      # See: https://github.com/Lissy93/dashy/issues - waiting for upstream fix
+      # - type: mvg
+      #   useProxy: true
+      #   options:
+      #     location: Marienplatz
+      #     limit: 5
+      # - type: mvg-connection
+      #   useProxy: true
+      #   options:
+      #     origin: Schwalbenstraße 2
+      #     destination: Walter-Gropius-Straße 17
+      #     header: true
+      #     filters:
+      #       product: [UBAHN]
+      #       line: [U1, U2, U4, U5, U6]

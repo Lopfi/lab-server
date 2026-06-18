@@ -1,0 +1,79 @@
+services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+      - JELLYFIN_PublishedServerUrl=http://10.0.0.101 #optional
+    volumes:
+      - config:/config
+      - cache:/cache
+      - movies:/media/movies
+      - shows:/media/shows
+      - anime:/media/anime
+      - music:/media/music
+    devices:
+      - /dev/dri:/dev/dri #Use for Intel QuickSync
+    ports:
+      - 3013:8096
+    restart: unless-stopped
+
+  jellystat-db:
+    image: postgres:16
+    container_name: jellystat-db
+    environment:
+      POSTGRES_DB: jellystat
+      POSTGRES_USER: jellystat
+      POSTGRES_PASSWORD: jellystat
+    volumes:
+      - jellystat-db:/var/lib/postgresql/data
+
+    restart: unless-stopped
+
+  jellystat:
+    image: cyfershepard/jellystat:latest
+    container_name: jellystat
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: jellystat
+      POSTGRES_PASSWORD: jellystat
+      POSTGRES_IP: jellystat-db
+      POSTGRES_DB: jellystat
+      POSTGRES_PORT: 5432
+      JWT_SECRET: "my-secret-jwt-key"
+      TZ: Europe/Berlin
+    ports:
+      - 3014:3000
+    depends_on:
+      - jellystat-db
+
+volumes:
+  config:
+  cache:
+  jellystat-db:
+  movies:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: 'nfsvers=4,addr=192.168.178.201,rw'
+      device: ':/mnt/slow/media/movies'
+  shows:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: 'nfsvers=4,addr=192.168.178.201,rw'
+      device: ':/mnt/slow/media/shows'
+  anime:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: 'nfsvers=4,addr=192.168.178.201,rw'
+      device: ':/mnt/slow/media/anime'
+  music:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: 'nfsvers=4,addr=192.168.178.201,rw'
+      device: ':/mnt/slow/media/music'
