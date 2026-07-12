@@ -3,8 +3,8 @@ services:
     image: lscr.io/linuxserver/jellyfin:latest
     container_name: jellyfin
     environment:
-      - PUID=1000
-      - PGID=1000
+      - PUID=3001
+      - PGID=3001
       - TZ=Europe/Berlin
       - JELLYFIN_PublishedServerUrl=http://10.0.0.101 #optional
     volumes:

@@ -104,6 +104,10 @@ sections:
         description: PDF Tools in your browser
         icon: fas fa-file-pdf
         url: https://bentopdf.com/
+      - title: PixelToPath
+        description: Convert images to SVG paths
+        icon: fas fa-vector-square
+        url: https://pixel-to-path.com/
   - name: Infos
     icon: fas fa-info-circle
     widgets:
